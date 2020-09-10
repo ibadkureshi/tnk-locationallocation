@@ -2,7 +2,7 @@ from django.shortcuts import render
 from pmedian.tasks import *
 from pandas import errors
 from prsapp.common.utilities import *
-
+import json
 
 def extract_csv(request):
     """
@@ -39,12 +39,27 @@ def get_task(request):
     """
     Return the status of a task given it's id
     """
-    return get_celery_task_status(request)
+    try:
+        task_id = request.GET['task-id']
+        result = AsyncResult(task_id)
+        result_dct = {result.task_id: {'status': result.status, 'result': result.result, 'date_done': str(result.date_done)}}
+        return HttpResponse(json.dumps(result_dct))
+
+    except KeyError:
+        return HttpResponseBadRequest("Please provide a valid task-id")
 
 
 def get_all_tasks(request):
     """
-    Get all tasks from redis and return id, status (json)
+    Get all celery tasks from  and return id, status (json)
     """
-    return HttpResponse("method not defined yet")
-    #return get_all_celery_tasks_redis(host='prs-redis', port=6379, db=0)
+    import glob
+    path = "/tmp/results/celery-task-meta-*"
+    results = (glob.glob(path))
+
+    result_dct = {}
+    for result in results:
+        result_dct[result[len(path)-1:]] = {'status': AsyncResult(result[len(path)-1:]).status
+            , 'result': AsyncResult(result[len(path)-1:]).result, 'date_done': str(AsyncResult(result[len(path)-1:]).date_done)}
+
+    return HttpResponse(json.dumps(result_dct))

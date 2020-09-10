@@ -26,16 +26,3 @@ def validate_upload(request, extension='.csv'):
         return False
     else:
         return True
-
-
-def get_celery_task_status(request):
-    """
-    Return the status of a task given it's id
-    """
-    try:
-        task_id = request.GET['task-id']
-        res = AsyncResult(task_id)
-        return HttpResponse(res.status)
-    except KeyError:
-        return HttpResponseBadRequest("Please provide a task-d")
-
