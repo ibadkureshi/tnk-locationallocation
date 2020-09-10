@@ -6,3 +6,4 @@ __pycache__/
 *.pid
 *.swp
 venv/
+.idea/

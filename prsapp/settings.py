@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'prs',
+    'pmedian',
 ]
 
 MIDDLEWARE = [
@@ -125,3 +126,4 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_IGNORE_RESULT = False
+CELERY_TASK_TRACK_STARTED = True
