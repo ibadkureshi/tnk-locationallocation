@@ -3,6 +3,7 @@ from celery.result import AsyncResult
 import json
 import redis
 from django.http import HttpResponseBadRequest, HttpResponse
+import mimetypes
 
 
 def column_numeric(column):
@@ -26,3 +27,19 @@ def validate_upload(request, extension='.csv'):
         return False
     else:
         return True
+
+
+def download_output_file(request):
+    """
+    Return the requested output file for the user to download locally
+    """
+    try:
+        filename = request.GET['filename']
+        filepath = 'output/' + filename
+        fl = open(filepath, 'r')
+        mime_type, _ = mimetypes.guess_type(filepath)
+        response = HttpResponse(fl, content_type=mime_type)
+        response['Content-Disposition'] = "attachment; filename=%s" % filename
+        return response
+    except KeyError:
+        return HttpResponseBadRequest("Please provide a filename")

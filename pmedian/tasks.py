@@ -1,21 +1,11 @@
 from celery import shared_task
 import pandas as pd
+import json
 from pmedian.functions import record
 from pmedian.functions import p_median
 
 @shared_task
 def p_median_calculation_task(input_df_json, output):
-    # {"name": "test",
-    # "time": {"submit": "00:00:00"},
-    # "job_type": "pmedian",
-    # "properties": {
-    #         "type": "geographic",
-    #         "cost_type": "time",
-    #         "demand_pts": {"if_out_of_bounds": "exclude"},
-    #         "box": {"sw": "52.25,-0.1", "ne": "52.5,0.4", "grid_height": "None", "grid_length": 10},
-    #         "p_val": {"min": 3, "max": 5}
-    #      }
-    # }
 
     input_df = pd.read_json(input_df_json)
     # Record start time
@@ -50,6 +40,12 @@ def p_median_calculation_task(input_df_json, output):
     output = record.features(output, grid, distances, metric)
     # Record end time
     output = record.time(output, "end")
-    print(output)
+
+    # Save results
+    #filename = "output/" + output["name"] + "_" + output["id"] + ".json"
+    filename = "output/" + p_median_calculation_task.request.id + ".json"
+    with open(filename, "w") as f:
+        json.dump(output, f)
+
     # Return results
     return output

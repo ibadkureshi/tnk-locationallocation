@@ -6,6 +6,9 @@ import json
 import pandas as pd
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.datastructures import MultiValueDictKeyError
+import glob
+import os.path
+
 
 @csrf_exempt
 def extract_csv(request):
@@ -39,10 +42,10 @@ def extract_csv(request):
 def create_task(request):
     if request.method == 'POST':
         try:
-                args = json.loads(request.POST.get('data')) #error checking
-                input_df = pd.read_csv(request.FILES['myfile'], header=0)
-                task = p_median_calculation_task.delay(input_df.to_json(), args)
-                return HttpResponse("Task-id=" + str(task))
+            args = json.loads(request.POST.get('data'))  # error checking
+            input_df = pd.read_csv(request.FILES['myfile'], header=0)
+            task = p_median_calculation_task.delay(input_df.to_json(), args)
+            return HttpResponse("Task-id=" + str(task))
 
         except MultiValueDictKeyError:
             return HttpResponseBadRequest("Please provide the correct input data")
@@ -69,26 +72,33 @@ def get_task(request):
     except KeyError:
         return HttpResponseBadRequest("Please provide a valid task-id")
 
+
 @csrf_exempt
 def get_all_tasks(request):
     """
     Get all celery tasks from  and return id, status (json)
     """
 
-    import glob
     path = "/tmp/results/celery-task-meta-*"
     results = (glob.glob(path))
 
     result_array = []
     for result in results:
-        result_dct = {}
-        result_dct[result[len(path)-1:]] = {'status': AsyncResult(result[len(path)-1:]).status
-            , 'date_done': str(AsyncResult(result[len(path)-1:]).date_done)}
+        result_dct = {result[len(path) - 1:]: {'status': AsyncResult(result[len(path) - 1:]).status,
+                                               'date_done': str(AsyncResult(result[len(path) - 1:]).date_done)}}
 
-        result_dct[result[len(path)-1:]]['result'] = AsyncResult(result[len(path) - 1:]).result
-        if isinstance(result_dct[result[len(path)-1:]]['result'], ValueError):
-            result_dct[result[len(path)-1:]]['result'] = 'Calculation ongoing'
+        if os.path.exists('output/' + result[len(path) - 1:] + ".json"):
+            result_dct[result[len(path) - 1:]]['result'] = "http://localhost:8000/pmedian/get-file?filename=" + result[len(path) - 1:] + ".json"
+        else:
+            result_dct[result[len(path) - 1:]]['result'] = 'Calculation ongoing'
         result_array.append(result_dct)
 
     return HttpResponse(json.dumps(result_array))
 
+
+@csrf_exempt
+def get_file(request):
+    """
+    Download output file to disk.
+    """
+    return download_output_file(request)
