@@ -1,5 +1,5 @@
 from celery import shared_task
-import json, pymongo
+import json
 from pmedian.functions import record
 from pmedian.functions import p_median
 

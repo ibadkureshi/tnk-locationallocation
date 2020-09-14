@@ -3,7 +3,10 @@ from pmedian.tasks import *
 from pandas import errors
 from prsapp.common.utilities import *
 import json
+import pandas as pd
+from django.views.decorators.csrf import csrf_exempt
 
+@csrf_exempt
 def extract_csv(request):
     """
     Getting a (two-column) csv and returning it as a json
@@ -29,8 +32,24 @@ def extract_csv(request):
         # In case of GET request, just show the form
         return render(request, 'file_upload.html', locals())
 
+# {"name": "test", // xristis
+#   "id": "000", //keno
+#   "time": {"submit": "???"},// front
+#   "job_type": "pmedian",// front
+#   "input":
+#   {"demand":
+#   {"file": "pmedian/functions/data/demand_data.csv", "lat_column": 0, "long_column": 1}//xristis
+#   }, "properties":
+# {"type": "geographic", //default
+#   "cost_type": "time",//xristis
+#   "demand_pts": {"if_out_of_bounds": "exclude"},//default
+#   "box": {"sw": "52.25,-0.1", "ne": "52.5,0.4", "grid_height": "None", "grid_length": 10},//xristis
+#   "p_val": {"min": 3, "max": 5}}}//xristis
 
 def create_task(request):
+    title = request.POST.get("title", "")
+    print(type(title))
+
     task = p_median_calculation_task.delay()
     return HttpResponse("Task-id=" + str(task))
 
