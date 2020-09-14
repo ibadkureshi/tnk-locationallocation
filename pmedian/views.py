@@ -53,6 +53,7 @@ def get_all_tasks(request):
     """
     Get all celery tasks from  and return id, status (json)
     """
+
     import glob
     path = "/tmp/results/celery-task-meta-*"
     results = (glob.glob(path))
@@ -63,3 +64,4 @@ def get_all_tasks(request):
             , 'result': AsyncResult(result[len(path)-1:]).result, 'date_done': str(AsyncResult(result[len(path)-1:]).date_done)}
 
     return HttpResponse(json.dumps(result_dct))
+
