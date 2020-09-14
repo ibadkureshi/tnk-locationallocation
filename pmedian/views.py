@@ -5,6 +5,7 @@ from prsapp.common.utilities import *
 import json
 import pandas as pd
 from django.views.decorators.csrf import csrf_exempt
+from django.utils.datastructures import MultiValueDictKeyError
 
 @csrf_exempt
 def extract_csv(request):
@@ -46,14 +47,22 @@ def extract_csv(request):
 #   "box": {"sw": "52.25,-0.1", "ne": "52.5,0.4", "grid_height": "None", "grid_length": 10},//xristis
 #   "p_val": {"min": 3, "max": 5}}}//xristis
 
+@csrf_exempt
 def create_task(request):
-    title = request.POST.get("title", "")
-    print(type(title))
+    if request.method == 'POST':
+        try:
+            request.FILES['myfile']
+            print(json.loads(request.POST.get('data')))
 
-    task = p_median_calculation_task.delay()
-    return HttpResponse("Task-id=" + str(task))
+            task = p_median_calculation_task.delay()
+            return HttpResponse("Task-id=" + str(task))
+        except MultiValueDictKeyError:
+            return HttpResponseBadRequest("Please provide the correct input data")
+    else:
+        return HttpResponse(status=405, reason="Method not allowed")
 
 
+@csrf_exempt
 def get_task(request):
     """
     Return the status of a task given it's id
@@ -67,7 +76,7 @@ def get_task(request):
     except KeyError:
         return HttpResponseBadRequest("Please provide a valid task-id")
 
-
+@csrf_exempt
 def get_all_tasks(request):
     """
     Get all celery tasks from  and return id, status (json)
