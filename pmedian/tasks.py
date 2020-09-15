@@ -50,5 +50,6 @@ def p_median_calculation_task(input_df_json, output):
     output = record.features(output, grid, distances, metric)
     # Record end time
     output = record.time(output, "end")
+    print(output)
     # Return results
     return output

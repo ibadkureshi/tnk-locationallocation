@@ -79,14 +79,16 @@ def get_all_tasks(request):
     path = "/tmp/results/celery-task-meta-*"
     results = (glob.glob(path))
 
-    result_dct = {}
+    result_array = []
     for result in results:
+        result_dct = {}
         result_dct[result[len(path)-1:]] = {'status': AsyncResult(result[len(path)-1:]).status
             , 'date_done': str(AsyncResult(result[len(path)-1:]).date_done)}
 
         result_dct[result[len(path)-1:]]['result'] = AsyncResult(result[len(path) - 1:]).result
         if isinstance(result_dct[result[len(path)-1:]]['result'], ValueError):
             result_dct[result[len(path)-1:]]['result'] = 'Calculation ongoing'
+        result_array.append(result_dct)
 
-    return HttpResponse(json.dumps(result_dct))
+    return HttpResponse(json.dumps(result_array))
 
