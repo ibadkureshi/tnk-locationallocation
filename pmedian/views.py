@@ -22,7 +22,9 @@ def extract_csv(request):
             # expecting csv with headers
             df = pd.read_csv(request.FILES['myfile'])
             if column_numeric(df[df.columns[0]]) and column_numeric(df[df.columns[1]]) and not df.isnull().values.any():
-                return HttpResponse(df.to_json(orient="records"))
+                df.columns = ['latitude', 'longitude']
+                print(df.head)
+                return HttpResponse(df.to_json(orient='records'))
             else:
                 return HttpResponseBadRequest("Data input error: Ensure data is numeric and no missing values exist")
 
@@ -33,29 +35,16 @@ def extract_csv(request):
         # In case of GET request, just show the form
         return render(request, 'file_upload.html', locals())
 
-# {"name": "test", // xristis
-#   "id": "000", //keno
-#   "time": {"submit": "???"},// front
-#   "job_type": "pmedian",// front
-#   "input":
-#   {"demand":
-#   {"file": "pmedian/functions/data/demand_data.csv", "lat_column": 0, "long_column": 1}//xristis
-#   }, "properties":
-# {"type": "geographic", //default
-#   "cost_type": "time",//xristis
-#   "demand_pts": {"if_out_of_bounds": "exclude"},//default
-#   "box": {"sw": "52.25,-0.1", "ne": "52.5,0.4", "grid_height": "None", "grid_length": 10},//xristis
-#   "p_val": {"min": 3, "max": 5}}}//xristis
 
 @csrf_exempt
 def create_task(request):
     if request.method == 'POST':
         try:
-            request.FILES['myfile']
-            print(json.loads(request.POST.get('data')))
+                args = json.loads(request.POST.get('data')) #error checking
+                input_df = pd.read_csv(request.FILES['myfile'], header=0)
+                task = p_median_calculation_task.delay(input_df.to_json(), args)
+                return HttpResponse("Task-id=" + str(task))
 
-            task = p_median_calculation_task.delay()
-            return HttpResponse("Task-id=" + str(task))
         except MultiValueDictKeyError:
             return HttpResponseBadRequest("Please provide the correct input data")
     else:

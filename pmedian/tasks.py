@@ -1,19 +1,30 @@
 from celery import shared_task
-import json
+import pandas as pd
 from pmedian.functions import record
 from pmedian.functions import p_median
 
 @shared_task
-def p_median_calculation_task():
-    # Load input from disk
-    with open("pmedian/functions/data/input.json", "r") as f:
-        output = json.load(f)
+def p_median_calculation_task(input_df_json, output):
+    # {"name": "test",
+    # "time": {"submit": "00:00:00"},
+    # "job_type": "pmedian",
+    # "properties": {
+    #         "type": "geographic",
+    #         "cost_type": "time",
+    #         "demand_pts": {"if_out_of_bounds": "exclude"},
+    #         "box": {"sw": "52.25,-0.1", "ne": "52.5,0.4", "grid_height": "None", "grid_length": 10},
+    #         "p_val": {"min": 3, "max": 5}
+    #      }
+    # }
+
+    input_df = pd.read_json(input_df_json)
     # Record start time
     output = record.time(output, "start")
     # Get coordinates
-    demand_coordinates = p_median.import_data(output["input"]["demand"]["file"],
-                                              latitude_col=output["input"]["demand"]["lat_column"],
-                                              longitude_col=output["input"]["demand"]["long_column"])
+    #demand_coordinates = p_median.import_data(file, latitude_col=0, longitude_col=1)
+
+    demand_coordinates = (input_df[input_df.columns[0]].astype(float).values, input_df[input_df.columns[1]].astype(float).values)
+
     # Get grid and out of bounds
     v = None if output["properties"]["box"]["grid_height"] == "None" \
         else output["properties"]["box"]["grid_height"]
