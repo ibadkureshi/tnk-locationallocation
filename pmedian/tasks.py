@@ -20,13 +20,13 @@ def p_median_calculation_task(input_df_json, output):
     input_df = pd.read_json(input_df_json)
     # Record start time
     output = record.time(output, "start")
+
     # Get coordinates
     #demand_coordinates = p_median.import_data(file, latitude_col=0, longitude_col=1)
+    input_df.columns = ['latitude', 'longitude']
+    input_df['lat_long'] = input_df[['latitude', 'longitude']].apply(tuple, axis=1)
+    demand_coordinates = input_df['lat_long'].to_list()
 
-    print(input_df)
-    demand_coordinates = [(input_df[input_df.columns[0]].astype(float).values[i], input_df[input_df.columns[1]].astype(float).values[i]) for i in range(len(input_df))]
-    print(demand_coordinates)
-    #print(demand_coordinates)
     # Get grid and out of bounds
     v = None if output["properties"]["box"]["grid_height"] == "None" \
         else output["properties"]["box"]["grid_height"]
