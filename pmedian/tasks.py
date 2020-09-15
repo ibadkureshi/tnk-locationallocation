@@ -23,8 +23,10 @@ def p_median_calculation_task(input_df_json, output):
     # Get coordinates
     #demand_coordinates = p_median.import_data(file, latitude_col=0, longitude_col=1)
 
-    demand_coordinates = (input_df[input_df.columns[0]].astype(float).values, input_df[input_df.columns[1]].astype(float).values)
-
+    print(input_df)
+    demand_coordinates = [(input_df[input_df.columns[0]].astype(float).values[i], input_df[input_df.columns[1]].astype(float).values[i]) for i in range(len(input_df))]
+    print(demand_coordinates)
+    #print(demand_coordinates)
     # Get grid and out of bounds
     v = None if output["properties"]["box"]["grid_height"] == "None" \
         else output["properties"]["box"]["grid_height"]

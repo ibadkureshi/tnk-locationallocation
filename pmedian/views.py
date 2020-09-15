@@ -23,7 +23,6 @@ def extract_csv(request):
             df = pd.read_csv(request.FILES['myfile'])
             if column_numeric(df[df.columns[0]]) and column_numeric(df[df.columns[1]]) and not df.isnull().values.any():
                 df.columns = ['latitude', 'longitude']
-                print(df.head)
                 return HttpResponse(df.to_json(orient='records'))
             else:
                 return HttpResponseBadRequest("Data input error: Ensure data is numeric and no missing values exist")
@@ -59,7 +58,12 @@ def get_task(request):
     try:
         task_id = request.GET['task-id']
         result = AsyncResult(task_id)
-        result_dct = {result.task_id: {'status': result.status, 'result': result.result, 'date_done': str(result.date_done)}}
+        result_dct = {result.task_id: {'status': result.status, 'date_done': str(result.date_done)}}
+
+        result_dct[result.task_id]['result'] = result.result
+        if isinstance(result_dct[result.task_id]['result'], ValueError):
+            result_dct[result.task_id]['result'] = 'Calculation ongoing'
+
         return HttpResponse(json.dumps(result_dct))
 
     except KeyError:
@@ -78,7 +82,11 @@ def get_all_tasks(request):
     result_dct = {}
     for result in results:
         result_dct[result[len(path)-1:]] = {'status': AsyncResult(result[len(path)-1:]).status
-            , 'result': AsyncResult(result[len(path)-1:]).result, 'date_done': str(AsyncResult(result[len(path)-1:]).date_done)}
+            , 'date_done': str(AsyncResult(result[len(path)-1:]).date_done)}
+
+        result_dct[result[len(path)-1:]]['result'] = AsyncResult(result[len(path) - 1:]).result
+        if isinstance(result_dct[result[len(path)-1:]]['result'], ValueError):
+            result_dct[result[len(path)-1:]]['result'] = 'Calculation ongoing'
 
     return HttpResponse(json.dumps(result_dct))
 
