@@ -20,6 +20,8 @@ RUN mkdir -p /app/broker/processed
 RUN mkdir -p /tmp/results
 RUN chmod -R 777 /tmp/results/
 RUN mkdir /prsapp
+RUN mkdir -p /static
+COPY ./static/ /static/
 COPY . /prsapp/
 WORKDIR /prsapp
 # Start
