@@ -42,8 +42,7 @@ def p_median_calculation_task(input_df_json, output):
     output = record.time(output, "end")
 
     # Save results
-    #filename = "output/" + output["name"] + "_" + output["id"] + ".json"
-    filename = "output/" + p_median_calculation_task.request.id + ".json"
+    filename = "output/" + output["name"] + "_" + p_median_calculation_task.request.id + ".json"
     with open(filename, "w") as f:
         json.dump(output, f)
 

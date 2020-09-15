@@ -62,7 +62,6 @@ def get_task(request):
         task_id = request.GET['task-id']
         result = AsyncResult(task_id)
         result_dct = {result.task_id: {'status': result.status, 'date_done': str(result.date_done)}}
-
         result_dct[result.task_id]['result'] = result.result
         if isinstance(result_dct[result.task_id]['result'], ValueError):
             result_dct[result.task_id]['result'] = 'Calculation ongoing'
@@ -84,13 +83,15 @@ def get_all_tasks(request):
 
     result_array = []
     for result in results:
-        result_dct = {result[len(path) - 1:]: {'status': AsyncResult(result[len(path) - 1:]).status,
-                                               'date_done': str(AsyncResult(result[len(path) - 1:]).date_done)}}
+        asyng_result = AsyncResult(result[len(path) - 1:])
+        result_dct = {result[len(path) - 1:]: {'status': asyng_result.status, 'date_done': str(asyng_result.date_done)}}
 
-        if os.path.exists('output/' + result[len(path) - 1:] + ".json"):
-            result_dct[result[len(path) - 1:]]['result'] = "http://localhost:8000/pmedian/get-file?filename=" + result[len(path) - 1:] + ".json"
+        file = glob.glob("output/*"+result[len(path) - 1:]+".json")
+        if file:
+            result_dct[result[len(path) - 1:]]['result'] = "http://localhost:8000/pmedian/get-file?filename=" + file[7:]
         else:
             result_dct[result[len(path) - 1:]]['result'] = 'Calculation ongoing'
+
         result_array.append(result_dct)
 
     return HttpResponse(json.dumps(result_array))
