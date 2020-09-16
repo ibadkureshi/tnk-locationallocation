@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 const ASSETS_URL = environment.assetsUrl;
 
@@ -10,15 +9,24 @@ const ASSETS_URL = environment.assetsUrl;
 })
 export class HeaderComponent implements OnInit {
   public logoUrl = `${ASSETS_URL}/assets/logos/trackknowlogo2.png`;
-  constructor(private router: Router) {
-    router.events.subscribe((val) => {
-      // see also
-      console.log(val instanceof NavigationEnd);
-      if (val instanceof NavigationEnd) {
-        console.log(val);
-      }
-    });
-  }
+  public urls = [
+    {
+      title: 'Home',
+      route: '/',
+      selected: false,
+    },
+    {
+      title: 'New Task',
+      route: 'new',
+      selected: false,
+    },
+    {
+      title: 'Results',
+      route: 'results',
+      selected: false,
+    },
+  ];
+  constructor() {}
 
   ngOnInit(): void {}
 }

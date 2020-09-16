@@ -27,6 +27,12 @@
       .menu-item {
         width: 7rem;
         transition: background-color 0.3s ease-in-out;
+        &.selected {
+          background-color: #3070ac;
+          a {
+            color: white;
+          }
+        }
         &:hover {
           background-color: #3070ac;
           a {

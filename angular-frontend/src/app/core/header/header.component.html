@@ -4,11 +4,11 @@
   </div>
   <div class="menu">
     <ul>
-      <li class="menu-item">
-        <a [routerLink]="['/']" routerLinkActive="active">Home</a>
-      </li>
-      <li class="menu-item"><a [routerLink]="['new']">New Job</a></li>
-      <li class="menu-item"><a [routerLink]="['results']">Results</a></li>
+      <ng-container *ngFor="let url of urls">
+        <li class="menu-item">
+          <a [routerLink]="[url.route]">{{ url.title }}</a>
+        </li>
+      </ng-container>
     </ul>
   </div>
 </div>
