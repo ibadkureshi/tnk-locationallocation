@@ -7,14 +7,29 @@
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  <link rel="stylesheet" href="{% static 'styles.b7f7aaac014004e5d7c6.css'%}"></head>
+    <link rel="stylesheet" href="{% static '/angular/styles.css' %}" />
+  </head>
   <body>
     <app-root></app-root>
-    <script src="{% static 'runtime-es2015.6655608c3ea39fe7ff80.js'%} type='module' "></script>
-    <script src="{% static 'runtime-es5.6655608c3ea39fe7ff80.js'%} nomodule defer "></script>
-    <script src="{% static 'polyfills-es5.cae7b2b32a1152d5562d.js'%} nomodule defer "></script>
-    <script src="{% static 'polyfills-es2015.106f49ffe3fa3d39e707.js'%} type='module'"></script>
-    <script src="{% static 'main-es2015.e65709b7b9f2e00bb79f.js'%} type='module'"></script>
-    <script src="{% static 'main-es5.e65709b7b9f2e00bb79f.js'%} nomodule defer"></script>
+    <script
+      src="{% static '/angular/runtime-es2015.js' %}"
+      type="module"
+    ></script>
+    <script
+      src="{% static '/angular/runtime-es5.js' %}"
+      nomodule
+      defer
+    ></script>
+    <script
+      src="{% static '/angular/polyfills-es5.js' %}"
+      nomodule
+      defer
+    ></script>
+    <script
+      src="{% static '/angular/polyfills-es2015.js' %}"
+      type="module"
+    ></script>
+    <script src="{% static '/angular/main-es2015.js' %}" type="module"></script>
+    <script src="{% static '/angular/main-es5.js' %}" nomodule defer></script>
   </body>
 </html>
