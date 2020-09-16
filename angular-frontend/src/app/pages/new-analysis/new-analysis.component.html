@@ -61,7 +61,13 @@
                 [nzXs]="24"
                 nzErrorTip="Please enter a valid grid length!"
               >
-                <input nz-input formControlName="gridLength" id="gridLength" />
+                <nz-input-number
+                  formControlName="gridLength"
+                  [nzMin]="1"
+                  [nzMax]="140"
+                  [nzStep]="1"
+                  id="gridLength"
+                ></nz-input-number>
               </nz-form-control>
             </nz-form-item>
           </div>
@@ -80,7 +86,7 @@
                 <nz-input-number
                   formControlName="minVal"
                   [nzMin]="1"
-                  [nzMax]="10"
+                  [nzMax]="30"
                   [nzStep]="1"
                   id="minVal"
                 ></nz-input-number>
@@ -100,7 +106,7 @@
                 <nz-input-number
                   formControlName="maxVal"
                   [nzMin]="1"
-                  [nzMax]="10"
+                  [nzMax]="30"
                   [nzStep]="1"
                   id="maxVal"
                 ></nz-input-number>
