@@ -7,6 +7,11 @@ RUN /usr/local/bin/python -m pip install --upgrade pip
 # Install libgeos-dev using apt
 RUN apt-get update
 RUN apt-get install -y libgeos-dev
+# Javascript / Angular dependencies
+# RUN apt-get install curl
+# RUN curl -sL https://deb.nodesource.com/setup_12.x | bash
+# RUN apt-get install nodejs
+# RUN npm install -g @angular/cli
 # Download basemap (without spamming stdout)
 RUN wget -q --show-progress --progress=bar:force:noscroll -O basemap-1.2.2rel.tar.gz https://github.com/matplotlib/basemap/archive/v1.2.2rel.tar.gz
 # Install packages (basemap needs to installed separetly after numpy and matplotlib for no errors)

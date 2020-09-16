@@ -1,0 +1,123 @@
+<div id="new-analysis">
+  <div class="box border shadow">
+    <div class="step">
+      <div>
+        <span class="highlight">Step 1</span>: Please upload a csv file.
+      </div>
+    </div>
+    <app-tkn-upload
+      (markers)="getMarkers($event)"
+      (csvBlob)="getCsvBlob($event)"
+    ></app-tkn-upload>
+  </div>
+  <div class="box border shadow" *ngIf="showMapSelection">
+    <div class="step">
+      <div>
+        <span class="highlight">Step 2</span>: Please select the area by drawing
+        a rectangle from the map toolbar.
+      </div>
+    </div>
+    <app-tnk-maps
+      [markers]="markers"
+      (boundingBox)="getBoundingBox($event)"
+    ></app-tnk-maps>
+  </div>
+  <div class="box border shadow" *ngIf="boundingBox">
+    <!-- <div class="box border shadow"> -->
+    <div class="step">
+      <div>
+        <span class="highlight">Step 3</span>: Please fill the required details
+      </div>
+    </div>
+    <!-- asd -->
+    <div class="row">
+      <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+        <div nz-row [nzGutter]="10">
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name"
+                >Task Name</nz-form-label
+              >
+              <nz-form-control
+                [nzSm]="18"
+                [nzXs]="24"
+                nzErrorTip="Please enter a valid task name!"
+              >
+                <input nz-input formControlName="name" id="name" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label
+                [nzSm]="6"
+                [nzXs]="24"
+                nzRequired
+                nzFor="gridLength"
+                >E-mail</nz-form-label
+              >
+              <nz-form-control
+                [nzSm]="18"
+                [nzXs]="24"
+                nzErrorTip="Please enter a valid grid length!"
+              >
+                <input nz-input formControlName="gridLength" id="gridLength" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="10">
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="minVal"
+                >Min p-value</nz-form-label
+              >
+              <nz-form-control
+                [nzSm]="18"
+                [nzXs]="24"
+                nzErrorTip="Please enter a valid p-value!"
+              >
+                <nz-input-number
+                  formControlName="minVal"
+                  [nzMin]="1"
+                  [nzMax]="10"
+                  [nzStep]="1"
+                  id="minVal"
+                ></nz-input-number>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="maxVal"
+                >Max p-value</nz-form-label
+              >
+              <nz-form-control
+                [nzSm]="18"
+                [nzXs]="24"
+                nzErrorTip="Please enter a valid p-value!"
+              >
+                <nz-input-number
+                  formControlName="maxVal"
+                  [nzMin]="1"
+                  [nzMax]="10"
+                  [nzStep]="1"
+                  id="maxVal"
+                ></nz-input-number>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <button
+    nz-button
+    nzType="primary"
+    (click)="startNewTask()"
+    *ngIf="markers.length > 0 && boundingBox && formIsValid"
+  >
+    <i nz-icon nzType="enter"></i>Start new job
+  </button>
+</div>

@@ -1,0 +1,14 @@
+<div id="header">
+  <div class="logo">
+    <img [src]="logoUrl" alt="" />
+  </div>
+  <div class="menu">
+    <ul>
+      <li class="menu-item">
+        <a [routerLink]="['/']" routerLinkActive="active">Home</a>
+      </li>
+      <li class="menu-item"><a [routerLink]="['new']">New Job</a></li>
+      <li class="menu-item"><a [routerLink]="['results']">Results</a></li>
+    </ul>
+  </div>
+</div>

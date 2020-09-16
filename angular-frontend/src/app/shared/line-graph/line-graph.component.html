@@ -1,0 +1,17 @@
+<div id="line-graph">
+  <div class="line">
+    <ngx-charts-line-chart #chart [scheme]="colorScheme" [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel" [xAxis]="xAxis" [yAxis]="yAxis" [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel" [results]="multi" (select)="onSelect($event)" (activate)="onActivate($event)"
+      (deactivate)="onDeactivate($event)">
+    </ngx-charts-line-chart>
+  </div>
+  <div class="graph-details">
+    <div><span class="highlight">Selected P:</span>3</div>
+    <div><span class="highlight">Avarage distance:</span>30km</div>
+    <div><span class="highlight">Max distance:</span>70km</div>
+    <div><span class="highlight"># Of date points:</span>3000</div>
+    <div><span class="highlight">S.d distance:</span>600</div>
+  </div>
+
+</div>

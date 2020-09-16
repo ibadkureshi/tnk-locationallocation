@@ -1,0 +1,38 @@
+<div id="results">
+  <div class="box border shadow" [ngClass]="{ close: !boxes[0] }">
+    <div class="step">
+      <div>
+        Please Select Simulation
+      </div>
+      <button class="actions" nz-button nzType="default" [nzSize]="'small'" (click)="boxes[0] = !boxes[0]">
+        <i nz-icon nzType="minus"></i>
+      </button>
+    </div>
+    <nz-select nzShowSearch nzSize="large" nzPlaceHolder="SELECT SIMULATION" (ngModelChange)="selectSimulation($event)"
+      [(ngModel)]="selectedSimulation">
+      <ng-container *ngFor="let simulation of simulations">
+        <nz-option [nzLabel]=" simulation.id + ' ' + simulation.name" [nzValue]="simulation.id"></nz-option>
+      </ng-container>
+    </nz-select>
+  </div>
+  <div class="box border shadow" [ngClass]="{ close: !boxes[1] }" *ngIf="simulationMarkers">
+    <div class="step">
+      <div class="title">
+        <h3>Detals for <strong>Mysmi - 3FOLH-PCBI-XYZ</strong></h3>
+      </div>
+      <button class="actions" nz-button nzType="default" [nzSize]="'small'" (click)="boxes[1] = !boxes[1]">
+        <i nz-icon nzType="minus"></i>
+      </button>
+    </div>
+    <app-simulation-meta></app-simulation-meta>
+  </div>
+  <div class="box border shadow" [ngClass]="{ close: !boxes[2] }" *ngIf="simulationMarkers">
+    <div class="step">
+      <div>&nbsp;</div>
+      <button class="actions" nz-button nzType="default" [nzSize]="'small'" (click)="boxes[2] = !boxes[2]">
+        <i nz-icon nzType="minus"></i>
+      </button>
+    </div>
+    <app-simulation-result [simulationMarkers]="simulationMarkers"></app-simulation-result>
+  </div>
+</div>

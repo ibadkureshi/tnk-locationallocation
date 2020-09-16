@@ -1,0 +1,20 @@
+.meta {
+  .title {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  .inner-box {
+    padding: 0.5rem 0px;
+  }
+
+  .highlight {
+    font-weight: bold;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px 0;
+  }
+}

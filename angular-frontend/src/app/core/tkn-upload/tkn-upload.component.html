@@ -1,0 +1,27 @@
+<div class="upload-wrap">
+  <div class="drag-text">
+    <input
+      class="file-upload-input"
+      id="myForm"
+      type="file"
+      name="file"
+      (change)="postMethod($event.target.files)"
+    />
+    <nz-spin nzSimple *ngIf="loading"></nz-spin>
+    <h3 *ngIf="!filename && !loading">Drag and drop or select a *.csv file</h3>
+    <div *ngIf="filename">
+      <span class="filename"> {{ filename }} </span
+      ><span class="filesize">{{ fileSize }}MB</span>
+      <span class="remove"
+        ><button
+          nz-button
+          nzType="primary"
+          [nzSize]="'small'"
+          (click)="removeFile()"
+        >
+          <i nz-icon nzType="close"></i>
+        </button>
+      </span>
+    </div>
+  </div>
+</div>

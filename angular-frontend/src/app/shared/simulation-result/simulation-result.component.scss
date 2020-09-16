@@ -1,0 +1,17 @@
+.main {
+  display: flex;
+  flex-direction: row;
+
+  .graph {
+    width: 40%;
+  }
+
+  .map {
+    width: 60%;
+  }
+
+  nz-select {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}

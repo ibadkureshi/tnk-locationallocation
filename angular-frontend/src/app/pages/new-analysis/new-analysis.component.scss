@@ -1,0 +1,12 @@
+#new-analysis {
+  .step {
+    font-weight: 400;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .highlight {
+      font-weight: 600;
+    }
+  }
+}

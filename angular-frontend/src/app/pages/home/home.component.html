@@ -1,0 +1,21 @@
+<div class="header"><h2>List of jobs</h2></div>
+<nz-table #basicTable [nzData]="listOfData" [nzLoading]="loading">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{ data.id }}</td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.status }}</td>
+      <td>
+        <a>Action</a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

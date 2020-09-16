@@ -1,0 +1,16 @@
+<div>
+  <div class="main">
+    <div class="graph">
+      <app-line-graph></app-line-graph>
+    </div>
+    <div class="map">
+      <nz-select nzShowSearch nzPlaceHolder="SelectP-Value" (ngModelChange)="selectValue($event)"
+        [(ngModel)]="selectedValue">
+        <ng-container *ngFor="let pvalue of pvalues; let i = index;">
+          <nz-option [nzLabel]="pvalue.name" [nzValue]="i"></nz-option>
+        </ng-container>
+      </nz-select>
+      <app-tnk-maps [showToolBar]="false" [markers]="extractedMarkers"></app-tnk-maps>
+    </div>
+  </div>
+</div>

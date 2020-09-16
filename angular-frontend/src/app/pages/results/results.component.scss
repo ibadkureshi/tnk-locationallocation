@@ -1,0 +1,22 @@
+#results {
+  .step {
+    font-weight: 400;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .highlight {
+      font-weight: 600;
+    }
+  }
+
+  .title {
+    text-align: center;
+    width: 100%;
+  }
+
+  nz-select {
+    width: 100%;
+  }
+}
