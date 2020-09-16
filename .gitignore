@@ -7,3 +7,15 @@ __pycache__/
 *.swp
 venv/
 .idea/
+
+# Angular ignores
+
+# compiled output
+/angular-frontend/dist
+/angular-frontend/tmp
+/angular-frontend/out-tsc
+# Only exists if Bazel was run
+/angular-frontend/bazel-out
+
+# dependencies
+/angular-frontend/node_modules
