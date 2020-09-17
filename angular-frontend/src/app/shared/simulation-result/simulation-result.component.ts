@@ -43,8 +43,8 @@ export class SimulationResultComponent implements OnInit {
     const markers = this.pvalues[index].markers;
     this.extractedMarkers = markers.map((m) => {
       return {
-        lat: m.coordinates[1],
-        lon: m.coordinates[0],
+        latitude: m.coordinates[1],
+        longitude: m.coordinates[0],
       };
     });
     console.log('selected p value', this.extractedMarkers);
