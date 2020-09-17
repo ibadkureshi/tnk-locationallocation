@@ -90,7 +90,8 @@ def get_all_tasks(request):
         result_dct = {result[len(path) - 1:]: {'status': asyng_result.status,
                                                'date_done': str(asyng_result.date_done)}}
 
-        file = glob.glob("output/*"+result[len(path) - 1:]+".json")
+        file = glob.glob("output/*"+str(asyng_result)+".json")[0]
+        print(file)
         if file:
             result_dct[result[len(
                 path) - 1:]]['result'] = "http://localhost:8000/pmedian/get-file?filename=" + file[7:]
