@@ -45,8 +45,7 @@ def create_task(request):
             args = json.loads(request.POST.get('data'))  # error checking
             input_df = pd.read_csv(request.FILES['myfile'], header=0)
             task = p_median_calculation_task.delay(input_df.to_json(), args)
-            response_data = {}
-            response_data['task_id'] = str(task)
+            response_data = {'task_id': str(task)}
             return HttpResponse(json.dumps(response_data), content_type="application/json")
 
         except MultiValueDictKeyError:
@@ -89,15 +88,11 @@ def get_all_tasks(request):
         asyng_result = AsyncResult(result[len(path) - 1:])
         result_dct = {result[len(path) - 1:]: {'status': asyng_result.status,
                                                'date_done': str(asyng_result.date_done)}}
-
-        file = glob.glob("output/*"+str(asyng_result)+".json")[0]
-        print(file)
-        if file:
-            result_dct[result[len(
-                path) - 1:]]['result'] = "http://localhost:8000/pmedian/get-file?filename=" + file[7:]
-        else:
-            result_dct[result[len(path) - 1:]
-                       ]['result'] = 'Calculation ongoing'
+        try:
+            file = glob.glob("output/*"+str(asyng_result)+".json")[0]
+            result_dct[result[len(path) - 1:]]['result'] = "http://localhost:8000/pmedian/get-file?filename=" + file[7:]
+        except IndexError:
+            result_dct[result[len(path) - 1:]]['result'] = 'Calculation ongoing'
 
         result_array.append(result_dct)
 
