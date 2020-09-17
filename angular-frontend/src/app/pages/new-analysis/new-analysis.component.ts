@@ -23,7 +23,7 @@ export class NewAnalysisComponent implements OnInit {
   markers: any = [];
   csvMarkers: any;
   public boundingBox: any = null;
-  jobMeta = {
+  taskMeta = {
     name: 'this is a test',
     time: { submit: '12:38:00' },
     job_type: 'pmedian',
@@ -106,18 +106,18 @@ export class NewAnalysisComponent implements OnInit {
     parseBox.ne = `${_northEast.lat},${_northEast.lng}`;
     parseBox.grid_height = 'None';
     parseBox.grid_length = gridLength;
-    this.jobMeta.properties.box = parseBox;
-    this.jobMeta.name = name;
-    this.jobMeta.properties.p_val.max = maxVal;
-    this.jobMeta.properties.p_val.min = minVal;
-    console.log(this.jobMeta);
+    this.taskMeta.properties.box = parseBox;
+    this.taskMeta.name = name;
+    this.taskMeta.properties.p_val.max = maxVal;
+    this.taskMeta.properties.p_val.min = minVal;
+    console.log(this.taskMeta);
     this.commonApi
-      .newTask(this.csv, JSON.stringify(this.jobMeta))
+      .newTask(this.csv, JSON.stringify(this.taskMeta))
       .then((result) => {
-        this.msg.info(`Job ${name} has started`);
+        this.msg.info(`Task ${name} has started`);
       })
       .catch((error) => {
-        this.msg.error('Error starting new job');
+        this.msg.error('Error starting new task');
       });
   }
 }

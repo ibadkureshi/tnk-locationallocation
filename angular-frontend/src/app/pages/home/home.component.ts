@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from 'src/app/services/api/common.service';
-interface IJob {
+interface ITask {
   id: string;
   status: string;
   name: string;
@@ -11,7 +11,7 @@ interface IJob {
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  public listOfData: IJob[] = [];
+  public listOfData: ITask[] = [];
   public loading = false;
   constructor(private _commonApi: CommonService) {}
 
@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
       .then((tasks) => {
         tasks.forEach((item: any) => {
           const key = Object.keys(item)[0];
-          const tmpObj: IJob = {
+          const tmpObj: ITask = {
             id: key,
             status: item[key].status,
             name: 'test',
