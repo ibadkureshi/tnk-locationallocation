@@ -45,7 +45,9 @@ def create_task(request):
             args = json.loads(request.POST.get('data'))  # error checking
             input_df = pd.read_csv(request.FILES['myfile'], header=0)
             task = p_median_calculation_task.delay(input_df.to_json(), args)
-            return HttpResponse("Task-id=" + str(task))
+            response_data = {}
+            response_data['task_id'] = str(task)
+            return HttpResponse(json.dumps(response_data), content_type="application/json")
 
         except MultiValueDictKeyError:
             return HttpResponseBadRequest("Please provide the correct input data")
@@ -61,7 +63,8 @@ def get_task(request):
     try:
         task_id = request.GET['task-id']
         result = AsyncResult(task_id)
-        result_dct = {result.task_id: {'status': result.status, 'date_done': str(result.date_done)}}
+        result_dct = {result.task_id: {
+            'status': result.status, 'date_done': str(result.date_done)}}
         result_dct[result.task_id]['result'] = result.result
         if isinstance(result_dct[result.task_id]['result'], ValueError):
             result_dct[result.task_id]['result'] = 'Calculation ongoing'
@@ -84,13 +87,16 @@ def get_all_tasks(request):
     result_array = []
     for result in results:
         asyng_result = AsyncResult(result[len(path) - 1:])
-        result_dct = {result[len(path) - 1:]: {'status': asyng_result.status, 'date_done': str(asyng_result.date_done)}}
+        result_dct = {result[len(path) - 1:]: {'status': asyng_result.status,
+                                               'date_done': str(asyng_result.date_done)}}
 
         file = glob.glob("output/*"+result[len(path) - 1:]+".json")
         if file:
-            result_dct[result[len(path) - 1:]]['result'] = "http://localhost:8000/pmedian/get-file?filename=" + file[7:]
+            result_dct[result[len(
+                path) - 1:]]['result'] = "http://localhost:8000/pmedian/get-file?filename=" + file[7:]
         else:
-            result_dct[result[len(path) - 1:]]['result'] = 'Calculation ongoing'
+            result_dct[result[len(path) - 1:]
+                       ]['result'] = 'Calculation ongoing'
 
         result_array.append(result_dct)
 
