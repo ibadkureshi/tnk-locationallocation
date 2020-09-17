@@ -8,10 +8,14 @@ RUN /usr/local/bin/python -m pip install --upgrade pip
 RUN apt-get update
 RUN apt-get install -y libgeos-dev
 # Javascript / Angular dependencies
-# RUN apt-get install curl
-# RUN curl -sL https://deb.nodesource.com/setup_12.x | bash
-# RUN apt-get install nodejs
-# RUN npm install -g @angular/cli
+RUN apt-get -y install curl
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash
+RUN apt-get -y install nodejs
+RUN npm install -y -g @angular/cli
+# Installing web application node_modules
+RUN cd angular-frontend
+RUN npm install
+RUN ng build --prod --output-path ./angular-frontend/static/angular/ --output-hashing none
 # Download basemap (without spamming stdout)
 RUN wget -q --show-progress --progress=bar:force:noscroll -O basemap-1.2.2rel.tar.gz https://github.com/matplotlib/basemap/archive/v1.2.2rel.tar.gz
 # Install packages (basemap needs to installed separetly after numpy and matplotlib for no errors)
