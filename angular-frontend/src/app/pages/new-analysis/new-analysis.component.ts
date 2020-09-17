@@ -114,12 +114,10 @@ export class NewAnalysisComponent implements OnInit {
     this.commonApi
       .newTask(this.csv, JSON.stringify(this.jobMeta))
       .then((result) => {
-        this.msg.info('Job started');
-        console.log('api success', result);
+        this.msg.info(`Job ${name} has started`);
       })
       .catch((error) => {
         this.msg.error('Error starting new job');
-        console.log('api error', error);
       });
   }
 }
