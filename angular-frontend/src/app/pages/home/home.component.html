@@ -1,12 +1,6 @@
 <div class="header">
   <h2>List of Tasks</h2>
-  <button
-    nz-button
-    nzType="primary"
-    [nzSize]="'small'"
-    nzShape="circle"
-    (click)="getAllTasks()"
-  >
+  <button nz-button nzType="primary" [nzSize]="'small'" nzShape="circle" (click)="getAllTasks()">
     <i nz-icon nzType="reload"></i>
   </button>
 </div>
@@ -16,6 +10,7 @@
       <th>Id</th>
       <th>Name</th>
       <th>Status</th>
+      <th>Result</th>
       <th></th>
     </tr>
   </thead>
@@ -25,7 +20,7 @@
       <td>{{ data.name }}</td>
       <td>{{ data.status }}</td>
       <td>
-        <a>Action</a>
+        <a *ngIf="item.download">Download</a>
       </td>
     </tr>
   </tbody>

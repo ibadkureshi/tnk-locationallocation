@@ -4,6 +4,7 @@ interface ITask {
   id: string;
   status: string;
   name: string;
+  result: string;
 }
 @Component({
   selector: 'app-home',
@@ -23,12 +24,15 @@ export class HomeComponent implements OnInit {
     this._commonApi
       .getTasks()
       .then((tasks) => {
+        this.listOfData = [];
         tasks.forEach((item: any) => {
-          const key = Object.keys(item)[0];
+          const tmp = [];
+          const { id, status, name, result } = item;
           const tmpObj: ITask = {
-            id: key,
-            status: item[key].status,
-            name: 'test',
+            id,
+            status,
+            name: name || '',
+            result,
           };
           this.listOfData.push(tmpObj);
         });

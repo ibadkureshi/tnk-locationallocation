@@ -112,7 +112,7 @@ export class NewAnalysisComponent implements OnInit {
     this.taskMeta.properties.p_val.min = minVal;
     console.log(this.taskMeta);
     this.commonApi
-      .newTask(this.csv, JSON.stringify(this.taskMeta))
+      .newTask(this.csv, this.taskMeta)
       .then((result) => {
         this.msg.info(`Task ${name} has started`);
       })
