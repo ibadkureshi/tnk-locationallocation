@@ -5,6 +5,7 @@ interface ITask {
   status: string;
   name: string;
   result: string;
+  download?: string;
 }
 @Component({
   selector: 'app-home',
@@ -28,12 +29,15 @@ export class HomeComponent implements OnInit {
         tasks.forEach((item: any) => {
           const tmp = [];
           const { id, status, name, result } = item;
-          const tmpObj: ITask = {
+          let tmpObj: ITask = {
             id,
             status,
             name: name || '',
             result,
           };
+          if (result.startsWith('http')) {
+            tmpObj['download'] = result;
+          }
           this.listOfData.push(tmpObj);
         });
         this.listOfData = [...this.listOfData];
