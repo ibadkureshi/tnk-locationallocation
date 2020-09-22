@@ -24,4 +24,8 @@ export class CommonService {
   getTasks(): Promise<any> {
     return this.httpClient.get(`${API_URL}/get-all-tasks`).toPromise();
   }
+
+  getTask(id: string): Promise<any> {
+    return this.httpClient.get(`${API_URL}/get-task?task-id=${id}`).toPromise();
+  }
 }
