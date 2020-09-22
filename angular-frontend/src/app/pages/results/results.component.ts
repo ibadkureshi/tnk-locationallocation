@@ -23,17 +23,23 @@ export class ResultsComponent implements OnInit {
     this.simulationMeta = null;
     const extractedTask = await this._commonApi.getTask(id);
     const results = extractedTask[id].result;
-    console.log(results);
     const {
       name,
       time: { start, end },
       properties: {
         demand_pts: { final },
+        p_val: { min, max },
       },
     } = results;
     this.simulationMeta = { id, name, start, end, dataPoints: final };
-    // this.simulationMarkers = selected.data;
-    // this.simulationMeta = selected;
+    const markers = results.features.map((f) => {
+      return {
+        coords: f.locations,
+        ...f.properties,
+      };
+    });
+    console.log('markers', markers);
+    this.simulationMarkers = markers;
   }
   getAllTasks() {
     this._commonApi

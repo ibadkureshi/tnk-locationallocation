@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 export interface ISimulationData {
+  p: number;
   markers: [
     {
       OrgnstN: string;
@@ -8,23 +9,13 @@ export interface ISimulationData {
     }
   ];
 }
-export interface ISimulation {
-  id: number;
-  name: string;
-  dateStart: string;
-  dateEnd: string;
-  timeRun: number;
-  inputFileName: string;
-  dataPoints: number;
-  data: ISimulationData[];
-}
 @Component({
   selector: 'app-simulation-result',
   templateUrl: './simulation-result.component.html',
   styleUrls: ['./simulation-result.component.scss'],
 })
 export class SimulationResultComponent implements OnInit {
-  @Input() simulationMarkers: ISimulationData;
+  @Input() simulationMarkers: ISimulationData[];
   extractedMarkers: any;
   selectedValue = null;
   pvalues: any;
@@ -39,14 +30,14 @@ export class SimulationResultComponent implements OnInit {
       };
     });
   }
-  selectValue(index: number): void {
-    const markers = this.pvalues[index].markers;
-    this.extractedMarkers = markers.map((m) => {
-      return {
-        latitude: m.coordinates[1],
-        longitude: m.coordinates[0],
-      };
-    });
-    console.log('selected p value', this.extractedMarkers);
+  selectValue(pVal: number): void {
+    const markers = this.simulationMarkers.find((s) => s.p === pVal);
+    // this.extractedMarkers = markers.map((m) => {
+    //   return {
+    //     latitude: m.coordinates[1],
+    //     longitude: m.coordinates[0],
+    //   };
+    // });
+    console.log('selected p value', markers);
   }
 }
