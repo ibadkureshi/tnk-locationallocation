@@ -86,13 +86,15 @@ def get_all_tasks(request):
     result_array = []
     for result in results:
         asyng_result = AsyncResult(result[len(path) - 1:])
-        result_dct = {result[len(path) - 1:]: {'status': asyng_result.status,
-                                               'date_done': str(asyng_result.date_done)}}
+        result_dct = {}
+        result_dct['id'] = result[len(path) - 1:]
+        result_dct['status'] = asyng_result.status
+        result_dct['date_done'] = str(asyng_result.date_done)
         try:
             file = glob.glob("output/*"+str(asyng_result)+".json")[0]
-            result_dct[result[len(path) - 1:]]['result'] = "http://localhost:8000/pmedian/get-file?filename=" + file[7:]
+            result_dct['result'] = "http://localhost:8000/pmedian/get-file?filename=" + file[7:]
         except IndexError:
-            result_dct[result[len(path) - 1:]]['result'] = 'Calculation ongoing'
+            result_dct['result'] = 'Calculation ongoing'
 
         result_array.append(result_dct)
 
