@@ -6,12 +6,11 @@
       (deactivate)="onDeactivate($event)">
     </ngx-charts-line-chart>
   </div>
-  <div class="graph-details">
-    <div><span class="highlight">Selected P:</span>3</div>
-    <div><span class="highlight">Avarage distance:</span>30km</div>
-    <div><span class="highlight">Max distance:</span>70km</div>
-    <div><span class="highlight"># Of date points:</span>3000</div>
-    <div><span class="highlight">S.d distance:</span>600</div>
+  <div class="graph-details" *ngIf="meta">
+    <div><span class="highlight">Selected P:</span>{{meta.pValue}}</div>
+    <div><span class="highlight">Avarage distance:</span>{{meta.avgDistance}}</div>
+    <div><span class="highlight">Max distance:</span>{{meta.maxDistance}}</div>
+    <div><span class="highlight">Avarage time:</span>{{meta.avgTime}}</div>
   </div>
 
 </div>

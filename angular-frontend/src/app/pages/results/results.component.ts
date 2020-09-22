@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import simulations from '../../services/results-dummy';
-import { ISimulationData } from 'src/app/shared/simulation-result/simulation-result.component';
 import { CommonService } from 'src/app/services/api/common.service';
 import { ISimulationMeta } from 'src/app/services/models/simulation-meta.model';
 @Component({

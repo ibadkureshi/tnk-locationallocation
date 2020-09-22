@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  Input,
+} from '@angular/core';
 import { multi } from './data';
 import * as shape from 'd3-shape';
 import { CustomLinerChartService } from './custom-liner-chart.service';
@@ -10,6 +16,8 @@ import { CustomLinerChartService } from './custom-liner-chart.service';
 })
 export class LineGraphComponent implements OnInit, AfterViewInit {
   @ViewChild('chart') chart: any;
+  @Input() meta: any;
+  @Input() graphData: any;
   multi: any[];
   curve: any = shape.curveCardinal;
   // options
