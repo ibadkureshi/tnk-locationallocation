@@ -2,10 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 
 export interface ISimulationData {
   p: number;
-  markers: [
+  coords: [
     {
-      OrgnstN: string;
-      coordinates: [number];
+      lat: number;
+      lng: number;
     }
   ];
 }
@@ -15,7 +15,7 @@ export interface ISimulationData {
   styleUrls: ['./simulation-result.component.scss'],
 })
 export class SimulationResultComponent implements OnInit {
-  @Input() simulationMarkers: ISimulationData[];
+  @Input() simulationMarkers: any[];
   extractedMarkers: any;
   selectedValue = null;
   pvalues: any;
@@ -31,13 +31,18 @@ export class SimulationResultComponent implements OnInit {
     });
   }
   selectValue(pVal: number): void {
+    this.extractedMarkers = null;
     const markers = this.simulationMarkers.find((s) => s.p === pVal);
-    // this.extractedMarkers = markers.map((m) => {
-    //   return {
-    //     latitude: m.coordinates[1],
-    //     longitude: m.coordinates[0],
-    //   };
-    // });
-    console.log('selected p value', markers);
+    const markersMap = markers.coords.map((m) => {
+      const { coordinates } = m.location;
+      const coo = coordinates.split(',');
+      return {
+        latitude: coo[0],
+        longitude: coo[1],
+        markerRadius: 10,
+      };
+    });
+    this.extractedMarkers = markersMap;
+    console.log('selected p value', markersMap);
   }
 }

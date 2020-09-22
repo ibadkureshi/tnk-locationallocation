@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import * as L from 'leaflet';
 import '../../../../node_modules/leaflet-draw/dist/leaflet.draw-src.js';
+import { Map } from 'leaflet';
 @Component({
   selector: 'app-tnk-maps',
   templateUrl: './tnk-maps.component.html',
@@ -19,6 +20,7 @@ export class TnkMapsComponent implements OnInit, OnChanges {
   @Input() markers: any;
   @Output() boundingBox: EventEmitter<any> = new EventEmitter();
   private mapIsLoaded: boolean = false;
+  layers: L.Layer[];
   constructor() {}
   public drawItems: L.FeatureGroup = L.featureGroup();
   public drawLocal: any = {
@@ -51,8 +53,7 @@ export class TnkMapsComponent implements OnInit, OnChanges {
       featureGroup: this.drawItems,
     },
   };
-
-  map;
+  map: Map;
   homeCoords = {
     lat: 23.810331,
     lon: 90.412521,
@@ -83,20 +84,13 @@ export class TnkMapsComponent implements OnInit, OnChanges {
   };
 
   initMarkers() {
-    const popupInfo = `<b style="color: red; background-color: white">${this.popupText}</b>`;
     var markerArray = [];
 
-    // L.marker([this.homeCoords.lat, this.homeCoords.lon], this.markerIcon)
-    //   .addTo(this.map)
-    //   .bindPopup(popupInfo);
     if (!this.markers || this.markers.length === 0) return;
     this.markers.forEach((point, index) => {
-      // const latlng = L.latLng(point.lat, point.lon);
-      // var layer = L.marker(latlng, this.markerIcon).addTo(this.map);
-      // layer.addTo(this.map);
       markerArray.push(
         L.circleMarker([point.latitude, point.longitude], {
-          radius: 2,
+          radius: point.markerRadius | 2,
           fillOpacity: 0.5,
           opacity: 0.5,
           color: '#3176b7',
@@ -107,19 +101,27 @@ export class TnkMapsComponent implements OnInit, OnChanges {
     });
 
     var group = L.featureGroup(markerArray).addTo(this.map);
+    this.layers.push(group);
     this.map.fitBounds(group.getBounds());
   }
   ngOnInit(): void {}
   onMapReady(map: L.Map) {
     this.map = map;
+    this.layers = [];
     // Do stuff with map
-    console.log(this.markers);
     this.initMarkers();
     this.mapIsLoaded = true;
   }
   ngOnChanges(changes: SimpleChanges) {
     if (!this.mapIsLoaded) return;
+    console.log('map readu', this.map);
+    this.wipeLayers();
     this.initMarkers();
+  }
+  wipeLayers() {
+    this.layers.forEach((s) => {
+      s.remove();
+    });
   }
   public onDrawCreated(e: any) {
     this.drawItems.addLayer((e as L.DrawEvents.Created).layer);
