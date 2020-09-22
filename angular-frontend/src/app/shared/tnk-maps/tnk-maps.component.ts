@@ -114,7 +114,6 @@ export class TnkMapsComponent implements OnInit, OnChanges {
   }
   ngOnChanges(changes: SimpleChanges) {
     if (!this.mapIsLoaded) return;
-    console.log('map readu', this.map);
     this.wipeLayers();
     this.initMarkers();
   }
@@ -133,7 +132,6 @@ export class TnkMapsComponent implements OnInit, OnChanges {
   }
 
   zoomSelection(_bounds: any): void {
-    console.log(_bounds);
     const bounds = new L.LatLngBounds(_bounds._southWest, _bounds._northEast);
     this.map.fitBounds(bounds);
   }

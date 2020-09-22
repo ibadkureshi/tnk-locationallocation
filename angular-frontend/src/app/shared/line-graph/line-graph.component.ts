@@ -5,7 +5,6 @@ import {
   AfterViewInit,
   Input,
 } from '@angular/core';
-import { multi } from './data';
 import * as shape from 'd3-shape';
 import { CustomLinerChartService } from './custom-liner-chart.service';
 
@@ -36,10 +35,13 @@ export class LineGraphComponent implements OnInit, AfterViewInit {
     domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5'],
   };
   constructor(private lineHelperService: CustomLinerChartService) {
-    Object.assign(this, { multi });
+    Object.assign(this, { ...this.graphData });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.graphData = [this.graphData];
+    console.log('graphData', this.graphData);
+  }
   onSelect(data): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
   }

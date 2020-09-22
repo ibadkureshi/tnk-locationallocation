@@ -1,7 +1,7 @@
 <div>
   <div class="main">
     <div class="graph">
-      <app-line-graph [meta]="selectedGraphMeta"></app-line-graph>
+      <app-line-graph [meta]="selectedGraphMeta" [graphData]="graphData"></app-line-graph>
     </div>
     <div class="map">
       <nz-select nzShowSearch nzPlaceHolder="SelectP-Value" (ngModelChange)="selectValue($event)"

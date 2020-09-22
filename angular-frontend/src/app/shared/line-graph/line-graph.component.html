@@ -1,8 +1,8 @@
 <div id="line-graph">
-  <div class="line">
+  <div class="line" *ngIf="graphData[0].series.length > 0">
     <ngx-charts-line-chart #chart [scheme]="colorScheme" [showXAxisLabel]="showXAxisLabel"
       [showYAxisLabel]="showYAxisLabel" [xAxis]="xAxis" [yAxis]="yAxis" [xAxisLabel]="xAxisLabel"
-      [yAxisLabel]="yAxisLabel" [results]="multi" (select)="onSelect($event)" (activate)="onActivate($event)"
+      [yAxisLabel]="yAxisLabel" [results]="graphData" (select)="onSelect($event)" (activate)="onActivate($event)"
       (deactivate)="onDeactivate($event)">
     </ngx-charts-line-chart>
   </div>

@@ -1,12 +1,19 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-export interface IGraphData {
+export interface IGraphMetaData {
   pValue: string;
   avgDistance: string;
   avgTime: string;
   maxDistance: string;
 }
-
+export interface series {
+  name: number;
+  value: number;
+}
+export interface IGraphData {
+  name: string;
+  series: series[];
+}
 @Component({
   selector: 'app-simulation-result',
   templateUrl: './simulation-result.component.html',
@@ -17,7 +24,11 @@ export class SimulationResultComponent implements OnInit {
   extractedMarkers: any;
   selectedValue = null;
   pvalues: any;
-  selectedGraphMeta: IGraphData = null;
+  selectedGraphMeta: IGraphMetaData = null;
+  graphData: IGraphData = {
+    name: '',
+    series: [],
+  };
   ngOnInit(): void {
     console.log('simulation', this.simulationMarkers);
     this.pvalues = this.simulationMarkers;
@@ -27,6 +38,15 @@ export class SimulationResultComponent implements OnInit {
         ...it,
       };
     });
+    this.simulationMarkers.forEach((datum) => {
+      const tmpObj = {
+        name: datum.avg_distance,
+        value: datum.p,
+      };
+      this.graphData.series.push(tmpObj);
+    });
+
+    this.graphData.name = 'P values';
   }
   selectValue(pVal: number): void {
     this.extractedMarkers = null;
