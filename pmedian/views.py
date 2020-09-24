@@ -65,8 +65,12 @@ def get_task(request):
         result_dct = {result.task_id: {
             'status': result.status, 'date_done': str(result.date_done)}}
         result_dct[result.task_id]['result'] = result.result
-        if isinstance(result_dct[result.task_id]['result'], ValueError):
-            result_dct[result.task_id]['result'] = 'Calculation ongoing'
+
+        try:
+            file = glob.glob("output/*"+str(result)+".json")[0]
+            result_dct['result_location'] = "http://localhost:8000/pmedian/get-file?filename=" + file[7:]
+        except IndexError:
+            result_dct['result_location'] = 'Calculation ongoing'
 
         return HttpResponse(json.dumps(result_dct))
 
@@ -93,6 +97,8 @@ def get_all_tasks(request):
         try:
             file = glob.glob("output/*"+str(asyng_result)+".json")[0]
             result_dct['result'] = "http://localhost:8000/pmedian/get-file?filename=" + file[7:]
+            with open(file) as f:
+                result_dct['name'] = json.load(f)['name']
         except IndexError:
             result_dct['result'] = 'Calculation ongoing'
 
