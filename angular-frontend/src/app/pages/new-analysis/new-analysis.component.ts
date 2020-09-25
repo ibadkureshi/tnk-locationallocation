@@ -53,6 +53,7 @@ export class NewAnalysisComponent implements OnInit {
       gridLength: [null, [Validators.required]],
       minVal: [null, [Validators.required]],
       maxVal: [null, [Validators.required]],
+      dataPoints: ['exclude', [Validators.required]],
     });
     this.validateForm.statusChanges.subscribe((result) => {
       console.log(result);
@@ -66,7 +67,6 @@ export class NewAnalysisComponent implements OnInit {
   }
   validateMaxValue() {
     const { minVal, maxVal } = this.validateForm.value;
-    console.log('minVal, maxVal', minVal, maxVal);
     if (!(maxVal || !minVal)) return false;
     if (maxVal >= minVal) {
       return true;
@@ -111,7 +111,13 @@ export class NewAnalysisComponent implements OnInit {
     this.boundingBox = $event;
   }
   public startNewTask() {
-    const { gridLength, maxVal, minVal, name } = this.validateForm.value;
+    const {
+      gridLength,
+      maxVal,
+      minVal,
+      name,
+      dataPoints,
+    } = this.validateForm.value;
     const parseBox = {
       sw: null,
       ne: null,
@@ -125,6 +131,7 @@ export class NewAnalysisComponent implements OnInit {
     parseBox.grid_length = gridLength;
     this.taskMeta.properties.box = parseBox;
     this.taskMeta.name = name;
+    this.taskMeta.properties.demand_pts.if_out_of_bounds = dataPoints;
     this.taskMeta.properties.p_val.max = maxVal;
     this.taskMeta.properties.p_val.min = minVal;
     console.log(this.taskMeta);

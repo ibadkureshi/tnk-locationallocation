@@ -5,10 +5,7 @@
         <span class="highlight">Step 1</span>: Please upload a csv file.
       </div>
     </div>
-    <app-tkn-upload
-      (markers)="getMarkers($event)"
-      (csvBlob)="getCsvBlob($event)"
-    ></app-tkn-upload>
+    <app-tkn-upload (markers)="getMarkers($event)" (csvBlob)="getCsvBlob($event)"></app-tkn-upload>
   </div>
   <div class="box border shadow" *ngIf="showMapSelection">
     <div class="step">
@@ -17,13 +14,10 @@
         a rectangle from the map toolbar.
       </div>
     </div>
-    <app-tnk-maps
-      [markers]="markers"
-      (boundingBox)="getBoundingBox($event)"
-    ></app-tnk-maps>
+    <app-tnk-maps [markers]="markers" (boundingBox)="getBoundingBox($event)"></app-tnk-maps>
   </div>
-  <div class="box border shadow" *ngIf="boundingBox">
-    <!-- <div class="box border shadow"> -->
+  <!-- <div class="box border shadow" *ngIf="boundingBox"> -->
+  <div class="box border shadow">
     <div class="step">
       <div>
         <span class="highlight">Step 3</span>: Please fill the required details
@@ -33,83 +27,52 @@
     <div class="row">
       <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
         <div nz-row [nzGutter]="10">
-          <div nz-col [nzSpan]="12">
+          <div nz-col [nzSpan]="8">
             <nz-form-item>
-              <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name"
-                >Task Name</nz-form-label
-              >
-              <nz-form-control
-                [nzSm]="18"
-                [nzXs]="24"
-                nzErrorTip="Please enter a valid task name!"
-              >
+              <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Task Name</nz-form-label>
+              <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Please enter a valid task name!">
                 <input nz-input formControlName="name" id="name" />
               </nz-form-control>
             </nz-form-item>
           </div>
-          <div nz-col [nzSpan]="12">
+          <div nz-col [nzSpan]="8">
             <nz-form-item>
-              <nz-form-label
-                [nzSm]="6"
-                [nzXs]="24"
-                nzRequired
-                nzFor="gridLength"
-                >Grid Length</nz-form-label
-              >
-              <nz-form-control
-                [nzSm]="18"
-                [nzXs]="24"
-                nzErrorTip="Please enter a valid grid length!"
-              >
-                <nz-input-number
-                  formControlName="gridLength"
-                  [nzMin]="1"
-                  [nzMax]="140"
-                  [nzStep]="1"
-                  id="gridLength"
-                ></nz-input-number>
+              <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="gridLength">Grid Length</nz-form-label>
+              <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Please enter a valid grid length!">
+                <nz-input-number formControlName="gridLength" [nzMin]="1" [nzMax]="140" [nzStep]="1" id="gridLength">
+                </nz-input-number>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="8">
+            <nz-form-item>
+              <nz-form-label [nzSm]="12" [nzXs]="24" nzRequired nzFor="dataPoints">Out of bounds points</nz-form-label>
+              <nz-form-control [nzSm]="12" [nzXs]="24" nzErrorTip="Please enter a valid grid length!">
+                <nz-select nzShowSearch formControlName="dataPoints" nzPlaceHolder="Excluded Points Action"
+                  id="dataPoints">
+                  <nz-option [nzLabel]="'include'" [nzValue]="'include'"></nz-option>
+                  <nz-option [nzLabel]="'exclude'" [nzValue]="'exclude'"></nz-option>
+                </nz-select>
               </nz-form-control>
             </nz-form-item>
           </div>
         </div>
         <div nz-row [nzGutter]="10">
-          <div nz-col [nzSpan]="12">
+          <div nz-col [nzSpan]="8">
             <nz-form-item>
-              <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="minVal"
-                >Min p-value</nz-form-label
-              >
-              <nz-form-control
-                [nzSm]="18"
-                [nzXs]="24"
-                nzErrorTip="Please enter a valid p-value!"
-              >
-                <nz-input-number
-                  formControlName="minVal"
-                  [nzMin]="1"
-                  [nzMax]="30"
-                  [nzStep]="1"
-                  id="minVal"
-                ></nz-input-number>
+              <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="minVal">Min p-value</nz-form-label>
+              <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Please enter a valid p-value!">
+                <nz-input-number formControlName="minVal" [nzMin]="1" [nzMax]="30" [nzStep]="1" id="minVal">
+                </nz-input-number>
               </nz-form-control>
             </nz-form-item>
           </div>
-          <div nz-col [nzSpan]="12">
+          <div nz-col [nzSpan]="8">
             <nz-form-item>
-              <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="maxVal"
-                >Max p-value</nz-form-label
-              >
-              <nz-form-control
-                [nzSm]="18"
-                [nzXs]="24"
-                nzErrorTip="Please enter a valid p-value!"
-              >
-                <nz-input-number
-                  formControlName="maxVal"
-                  [nzMin]="1"
-                  [nzMax]="30"
-                  [nzStep]="1"
-                  id="maxVal"
-                ></nz-input-number>
+              <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="maxVal">Max p-value</nz-form-label>
+              <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Please enter a valid p-value!">
+                <nz-input-number formControlName="maxVal" [nzMin]="1" [nzMax]="30" [nzStep]="1" id="maxVal">
+                </nz-input-number>
               </nz-form-control>
             </nz-form-item>
           </div>
@@ -118,12 +81,7 @@
     </div>
   </div>
 
-  <button
-    nz-button
-    nzType="primary"
-    (click)="startNewTask()"
-    *ngIf="markers.length > 0 && boundingBox && formIsValid"
-  >
+  <button nz-button nzType="primary" (click)="startNewTask()" *ngIf="markers.length > 0 && boundingBox && formIsValid">
     <i nz-icon nzType="enter"></i>Start new task
   </button>
 </div>
