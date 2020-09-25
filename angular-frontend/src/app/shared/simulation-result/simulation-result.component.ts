@@ -57,7 +57,7 @@ export class SimulationResultComponent implements OnInit {
       this.graphData.series.push(tmpObj);
     });
     this.graphData.yAxis =
-      this.costType === 'distance' ? 'Avg Distance' : 'Avg Time';
+      this.costType === 'distance' ? 'Avg Distance - (m)' : 'Avg Time - (s)';
     this.graphData.name = 'P value';
     this.graphData.xAxis = 'P values';
   }
