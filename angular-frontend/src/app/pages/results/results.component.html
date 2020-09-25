@@ -20,10 +20,10 @@
     </div>
     <app-simulation-meta [meta]="simulationMeta"></app-simulation-meta>
   </div>
-  <div class="box border shadow" *ngIf="simulationMarkers">
+  <div class="box border shadow" *ngIf="showResults">
     <div class="step">
       <div>&nbsp;</div>
     </div>
-    <app-simulation-result [simulationMarkers]="simulationMarkers"></app-simulation-result>
+    <app-simulation-result [simulationMarkers]="simulationMarkers" [costType]="costType"></app-simulation-result>
   </div>
 </div>

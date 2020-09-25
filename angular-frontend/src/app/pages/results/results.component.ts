@@ -9,8 +9,10 @@ import { ISimulationMeta } from 'src/app/services/models/simulation-meta.model';
 export class ResultsComponent implements OnInit {
   simulations = [];
   public boxes = [true, false, true];
+  public costType = '';
+  private showResults = false;
   selectedSimulation = null;
-  simulationMarkers: any;
+  simulationMarkers: [];
   simulationMeta: ISimulationMeta = null;
   constructor(private _commonApi: CommonService) {}
 
@@ -18,6 +20,7 @@ export class ResultsComponent implements OnInit {
     this.getAllTasks();
   }
   public async selectSimulation(id: string) {
+    this.showResults = false;
     this.simulationMeta = null;
     const extractedTask = await this._commonApi.getTask(id);
     const results = extractedTask[id].result;
@@ -25,10 +28,12 @@ export class ResultsComponent implements OnInit {
       name,
       time: { start, end },
       properties: {
+        cost_type,
         demand_pts: { final },
         p_val: { min, max },
       },
     } = results;
+    this.costType = cost_type;
     this.simulationMeta = { id, name, start, end, dataPoints: final };
     const markers = results.features.map((f) => {
       return {
@@ -36,8 +41,10 @@ export class ResultsComponent implements OnInit {
         ...f.properties,
       };
     });
-    console.log('markers', markers);
     this.simulationMarkers = markers;
+    if (this.simulationMarkers.length > 0) {
+      this.showResults = true;
+    }
   }
   getAllTasks() {
     this._commonApi

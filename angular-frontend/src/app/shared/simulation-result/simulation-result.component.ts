@@ -1,4 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 
 export interface IGraphMetaData {
   pValue: string;
@@ -13,6 +19,8 @@ export interface series {
 export interface IGraphData {
   name: string;
   series: series[];
+  yAxis: string;
+  xAxis: string;
 }
 @Component({
   selector: 'app-simulation-result',
@@ -21,6 +29,7 @@ export interface IGraphData {
 })
 export class SimulationResultComponent implements OnInit {
   @Input() simulationMarkers: any[];
+  @Input() costType: string = '';
   extractedMarkers: any;
   selectedValue = null;
   pvalues: any;
@@ -28,6 +37,8 @@ export class SimulationResultComponent implements OnInit {
   graphData: IGraphData = {
     name: '',
     series: [],
+    yAxis: '',
+    xAxis: '',
   };
   ngOnInit(): void {
     console.log('simulation', this.simulationMarkers);
@@ -40,13 +51,17 @@ export class SimulationResultComponent implements OnInit {
     });
     this.simulationMarkers.forEach((datum) => {
       const tmpObj = {
-        name: datum.avg_distance,
-        value: datum.p,
+        name: datum.p,
+        value:
+          this.costType === 'distance' ? datum.avg_distance : datum.avg_time,
       };
       this.graphData.series.push(tmpObj);
     });
-
-    this.graphData.name = 'P values';
+    console.log('COST TUPE', this.costType);
+    this.graphData.yAxis =
+      this.costType === 'distance' ? 'Avg Distance' : 'Avg Time';
+    this.graphData.name = 'P value';
+    this.graphData.xAxis = 'P values';
   }
   selectValue(pVal: number): void {
     this.extractedMarkers = null;

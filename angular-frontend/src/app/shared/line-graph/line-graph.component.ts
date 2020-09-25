@@ -27,8 +27,8 @@ export class LineGraphComponent implements OnInit, AfterViewInit {
   yAxis: boolean = true;
   showYAxisLabel: boolean = true;
   showXAxisLabel: boolean = true;
-  xAxisLabel: string = 'P';
-  yAxisLabel: string = 'Avg distance';
+  xAxisLabel: string = '';
+  yAxisLabel: string = '';
   timeline: boolean = true;
 
   colorScheme = {
@@ -39,8 +39,12 @@ export class LineGraphComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.graphData = [this.graphData];
     console.log('graphData', this.graphData);
+    this.yAxisLabel = this.graphData.yAxis;
+    this.xAxisLabel = this.graphData.xAxis;
+    delete this.graphData.yAxis;
+    delete this.graphData.xAxis;
+    this.graphData = [this.graphData];
   }
   onSelect(data): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
