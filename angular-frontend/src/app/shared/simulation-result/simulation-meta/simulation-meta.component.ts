@@ -11,4 +11,9 @@ export class SimulationMetaComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+  downloadFile() {
+    var a = <any>document.getElementById('download'); //or grab it by tagname etc
+    a.href = this.meta.fileName;
+    document.getElementById('download').click();
+  }
 }

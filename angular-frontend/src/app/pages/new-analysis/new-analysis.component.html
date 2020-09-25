@@ -39,7 +39,7 @@
             <nz-form-item>
               <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="gridLength">Grid Length</nz-form-label>
               <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Please enter a valid grid length!">
-                <nz-input-number formControlName="gridLength" [nzMin]="1" [nzMax]="140" [nzStep]="1" id="gridLength">
+                <nz-input-number formControlName="gridLength" [nzMin]="1" [nzMax]="50" [nzStep]="1" id="gridLength">
                 </nz-input-number>
               </nz-form-control>
             </nz-form-item>
@@ -74,7 +74,8 @@
             <nz-form-item>
               <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="minVal">Min p-value</nz-form-label>
               <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Please enter a valid p-value!">
-                <nz-input-number formControlName="minVal" [nzMin]="1" [nzMax]="30" [nzStep]="1" id="minVal">
+                <nz-input-number formControlName="minVal" [nzMin]="1" [nzMax]="maxPvaluesBounds" [nzStep]="1"
+                  id="minVal">
                 </nz-input-number>
               </nz-form-control>
             </nz-form-item>
@@ -83,7 +84,8 @@
             <nz-form-item>
               <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="maxVal">Max p-value</nz-form-label>
               <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Please enter a valid p-value!">
-                <nz-input-number formControlName="maxVal" [nzMin]="1" [nzMax]="30" [nzStep]="1" id="maxVal">
+                <nz-input-number formControlName="maxVal" [nzMin]="1" [nzMax]="maxPvaluesBounds" [nzStep]="1"
+                  id="maxVal">
                 </nz-input-number>
               </nz-form-control>
             </nz-form-item>

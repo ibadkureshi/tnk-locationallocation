@@ -20,7 +20,7 @@ export class NewAnalysisComponent implements OnInit {
   public csv: any;
   public formIsValid = false;
   validateForm!: FormGroup;
-
+  public maxPvaluesBounds = 10;
   markers: any = [];
   csvMarkers: any;
   public boundingBox: any = null;
@@ -50,15 +50,16 @@ export class NewAnalysisComponent implements OnInit {
   ngOnInit(): void {
     this.validateForm = this.fb.group({
       name: [null, [Validators.required]],
-      gridLength: [null, [Validators.required]],
-      minVal: [null, [Validators.required]],
-      maxVal: [null, [Validators.required]],
+      gridLength: [10, [Validators.required]],
+      minVal: [1, [Validators.required]],
+      maxVal: [2, [Validators.required]],
       costType: ['distance', [Validators.required]],
       dataPoints: ['exclude', [Validators.required]],
     });
     this.validateForm.statusChanges.subscribe((result) => {
       console.log(result);
       const pValValidation = this.validateMaxValue();
+      this.setMaxPValueBound();
       if (result === 'VALID') {
         this.formIsValid = true;
       } else {
@@ -66,9 +67,21 @@ export class NewAnalysisComponent implements OnInit {
       }
     });
   }
+
+  setMaxPValueBound() {
+    const { gridLength } = this.validateForm.value;
+    if (gridLength) {
+      let maxFormula = Math.floor(0.25 * Math.pow(gridLength, 2));
+      if (maxFormula === 0) {
+        maxFormula = 1;
+      }
+      this.maxPvaluesBounds = maxFormula;
+    }
+  }
   validateMaxValue() {
     const { minVal, maxVal } = this.validateForm.value;
     if (!(maxVal || !minVal)) return false;
+    // max value must be  greater equal that min value
     if (maxVal >= minVal) {
       return true;
     }

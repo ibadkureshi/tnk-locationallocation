@@ -39,7 +39,6 @@ export class LineGraphComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log('graphData', this.graphData);
     this.yAxisLabel = this.graphData.yAxis;
     this.xAxisLabel = this.graphData.xAxis;
     delete this.graphData.yAxis;
@@ -47,18 +46,18 @@ export class LineGraphComponent implements OnInit, AfterViewInit {
     this.graphData = [this.graphData];
   }
   onSelect(data): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+    // console.log('Item clicked', JSON.parse(JSON.stringify(data)));
   }
 
   onActivate(data): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
+    // console.log('Activate', JSON.parse(JSON.stringify(data)));
   }
 
   onDeactivate(data): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+    // console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
   ngAfterViewInit() {
-    this.lineHelperService.showDots(this.chart);
+    // this.lineHelperService.showDots(this.chart);
   }
 }

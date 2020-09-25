@@ -41,7 +41,6 @@ export class SimulationResultComponent implements OnInit {
     xAxis: '',
   };
   ngOnInit(): void {
-    console.log('simulation', this.simulationMarkers);
     this.pvalues = this.simulationMarkers;
     this.pvalues = this.pvalues.map((it, index) => {
       return {
@@ -57,7 +56,6 @@ export class SimulationResultComponent implements OnInit {
       };
       this.graphData.series.push(tmpObj);
     });
-    console.log('COST TUPE', this.costType);
     this.graphData.yAxis =
       this.costType === 'distance' ? 'Avg Distance' : 'Avg Time';
     this.graphData.name = 'P value';
@@ -81,8 +79,6 @@ export class SimulationResultComponent implements OnInit {
       avgTime: markers.avg_time,
       maxDistance: markers.max_distance,
     };
-    console.log('selectedGraphMeta', this.selectedGraphMeta);
     this.extractedMarkers = markersMap;
-    console.log('selected p value', markersMap);
   }
 }

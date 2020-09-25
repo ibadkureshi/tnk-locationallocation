@@ -20,7 +20,10 @@
     </div>
   </div>
   <div class="actions">
-    <button nz-button class="btn-primary" nzShape="round"><i nz-icon nzType="download"></i>CSV</button>
-    <button nz-button class="btn-primary" nzShape="round"><i nz-icon nzType="download"></i>GeoJson</button>
+    <button nz-button class="btn-primary" nzShape="round" (click)="downloadFile()"><i nz-icon
+        nzType="download"></i>CSV</button>
+    <button nz-button class="btn-primary" nzShape="round" (click)="downloadFile()"><i nz-icon
+        nzType="download"></i>GeoJson</button>
   </div>
+  <a id="download" href=""></a>
 </div>
