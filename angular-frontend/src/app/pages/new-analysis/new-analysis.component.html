@@ -47,10 +47,10 @@
           <div nz-col [nzSpan]="8">
             <nz-form-item>
               <nz-form-label [nzSm]="12" [nzXs]="24" nzRequired nzFor="dataPoints">Out of bounds points</nz-form-label>
-              <nz-form-control [nzSm]="12" [nzXs]="24" nzErrorTip="Please enter a valid grid length!">
+              <nz-form-control [nzSm]="12" [nzXs]="24" nzErrorTip="Please select what to do with the points!">
                 <nz-select nzShowSearch formControlName="dataPoints" nzPlaceHolder="Excluded Points Action"
                   id="dataPoints">
-                  <nz-option [nzLabel]="'include'" [nzValue]="'include'"></nz-option>
+                  <!-- <nz-option [nzLabel]="'include'" [nzValue]="'include'"></nz-option> -->
                   <nz-option [nzLabel]="'exclude'" [nzValue]="'exclude'"></nz-option>
                 </nz-select>
               </nz-form-control>
@@ -58,6 +58,18 @@
           </div>
         </div>
         <div nz-row [nzGutter]="10">
+          <div nz-col [nzSpan]="8">
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="costType">Cost type</nz-form-label>
+              <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Please select distance or time">
+                <nz-select nzShowSearch formControlName="costType" nzPlaceHolder="Action For Excluded Points"
+                  id="costType">
+                  <nz-option [nzLabel]="'time'" [nzValue]="'time'"></nz-option>
+                  <nz-option [nzLabel]="'distance'" [nzValue]="'distance'"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
           <div nz-col [nzSpan]="8">
             <nz-form-item>
               <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="minVal">Min p-value</nz-form-label>

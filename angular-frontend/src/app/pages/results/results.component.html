@@ -8,7 +8,7 @@
     <nz-select nzShowSearch nzSize="large" nzPlaceHolder="SELECT SIMULATION" (ngModelChange)="selectSimulation($event)"
       [(ngModel)]="selectedSimulation">
       <ng-container *ngFor="let simulation of simulations">
-        <nz-option [nzLabel]="simulation.id" [nzValue]="simulation.id"></nz-option>
+        <nz-option [nzLabel]="simulation.name" [nzValue]="simulation.id"></nz-option>
       </ng-container>
     </nz-select>
   </div>

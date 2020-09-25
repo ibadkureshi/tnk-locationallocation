@@ -53,6 +53,7 @@ export class NewAnalysisComponent implements OnInit {
       gridLength: [null, [Validators.required]],
       minVal: [null, [Validators.required]],
       maxVal: [null, [Validators.required]],
+      costType: ['distance', [Validators.required]],
       dataPoints: ['exclude', [Validators.required]],
     });
     this.validateForm.statusChanges.subscribe((result) => {
@@ -117,6 +118,7 @@ export class NewAnalysisComponent implements OnInit {
       minVal,
       name,
       dataPoints,
+      costType,
     } = this.validateForm.value;
     const parseBox = {
       sw: null,
@@ -132,6 +134,7 @@ export class NewAnalysisComponent implements OnInit {
     this.taskMeta.properties.box = parseBox;
     this.taskMeta.name = name;
     this.taskMeta.properties.demand_pts.if_out_of_bounds = dataPoints;
+    this.taskMeta.properties.cost_type = costType;
     this.taskMeta.properties.p_val.max = maxVal;
     this.taskMeta.properties.p_val.min = minVal;
     console.log(this.taskMeta);

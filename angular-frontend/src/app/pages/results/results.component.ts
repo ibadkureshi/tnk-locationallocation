@@ -43,8 +43,8 @@ export class ResultsComponent implements OnInit {
     this._commonApi
       .getTasks()
       .then((tasks) => {
-        tasks.filter((t) => t.status === 'SUCCESS');
-        this.simulations = tasks;
+        this.simulations = tasks.filter((t) => t.status === 'SUCCESS');
+        console.log('filrered tasks', this.simulations);
       })
       .catch((error) => {
         console.log(error);
