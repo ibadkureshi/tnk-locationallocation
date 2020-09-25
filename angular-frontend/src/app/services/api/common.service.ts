@@ -17,7 +17,7 @@ export class CommonService {
   newTask(csv, data): Promise<any> {
     const formData = new FormData();
     formData.append('myfile', csv);
-    formData.append('data', data);
+    formData.append('data', JSON.stringify(data));
     return this.httpClient.post(`${API_URL}/create-task`, formData).toPromise();
   }
 

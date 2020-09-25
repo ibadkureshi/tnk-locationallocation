@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { CommonService } from 'src/app/services/api/common.service';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -54,6 +55,8 @@ export class NewAnalysisComponent implements OnInit {
       maxVal: [null, [Validators.required]],
     });
     this.validateForm.statusChanges.subscribe((result) => {
+      console.log(result);
+      const pValValidation = this.validateMaxValue();
       if (result === 'VALID') {
         this.formIsValid = true;
       } else {
@@ -61,13 +64,27 @@ export class NewAnalysisComponent implements OnInit {
       }
     });
   }
+  validateMaxValue() {
+    const { minVal, maxVal } = this.validateForm.value;
+    console.log('minVal, maxVal', minVal, maxVal);
+    if (!(maxVal || !minVal)) return false;
+    if (maxVal >= minVal) {
+      return true;
+    }
+
+    this.validateForm.patchValue({
+      minVal: 1,
+      maxVal: null,
+    });
+    this.msg.warning(`Max p value must be equal or greater than min p value`);
+    return false;
+  }
   updateConfirmValidator(): void {
     /** wait for refresh value */
     Promise.resolve().then(() =>
       this.validateForm.controls.checkPassword.updateValueAndValidity()
     );
   }
-
   submitForm(): void {
     for (const i in this.validateForm.controls) {
       this.validateForm.controls[i].markAsDirty();
