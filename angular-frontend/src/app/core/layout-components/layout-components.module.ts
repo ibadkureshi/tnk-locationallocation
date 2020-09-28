@@ -14,6 +14,9 @@ import {
   NzInputNumberModule,
   NzSpinModule,
 } from 'ng-zorro-antd';
+
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+
 @NgModule({
   declarations: [],
   imports: [CommonModule],
@@ -30,6 +33,7 @@ import {
     NzInputNumberModule,
     NzSpinModule,
     NzCheckboxModule,
+    NzToolTipModule,
   ],
 })
 export class LayoutComponentsModule {}
