@@ -56,8 +56,8 @@ export class TnkMapsComponent implements OnInit, OnChanges {
   };
   map: Map;
   homeCoords = {
-    lat: 23.810331,
-    lon: 90.412521,
+    lat: 51.509865,
+    lon: -0.118092,
   };
 
   popupText = 'Some popup text';

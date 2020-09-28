@@ -39,6 +39,7 @@ export class LineGraphComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    console.log(this.graphData);
     this.yAxisLabel = this.graphData.yAxis;
     this.xAxisLabel = this.graphData.xAxis;
     delete this.graphData.yAxis;

@@ -16,8 +16,8 @@
     </div>
     <app-tnk-maps [markers]="markers" (boundingBox)="getBoundingBox($event)"></app-tnk-maps>
   </div>
-  <!-- <div class="box border shadow" *ngIf="boundingBox"> -->
-  <div class="box border shadow">
+  <div class="box border shadow" *ngIf="boundingBox">
+    <!-- <div class="box border shadow"> -->
     <div class="step">
       <div>
         <span class="highlight">Step 3</span>: Please fill the required details. Note that computation time increases
