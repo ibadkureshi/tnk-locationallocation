@@ -20,7 +20,7 @@ export class NewAnalysisComponent implements OnInit {
   public csv: any;
   public formIsValid = false;
   validateForm!: FormGroup;
-  public maxPvaluesBounds = 10;
+  public maxPvaluesBounds = 25;
   markers: any = [];
   csvMarkers: any;
   public boundingBox: any = null;
@@ -56,6 +56,12 @@ export class NewAnalysisComponent implements OnInit {
       costType: ['distance', [Validators.required]],
       dataPoints: ['exclude', [Validators.required]],
     });
+    this.validateForm.get('gridLength')!.valueChanges.subscribe((data) => {
+      this.validateForm.patchValue({
+        minVal: 1,
+        maxVal: null,
+      });
+    });
     this.validateForm.statusChanges.subscribe((result) => {
       console.log(result);
       const pValValidation = this.validateMaxValue();
@@ -74,6 +80,8 @@ export class NewAnalysisComponent implements OnInit {
       let maxFormula = Math.floor(0.25 * Math.pow(gridLength, 2));
       if (maxFormula === 0) {
         maxFormula = 1;
+      } else if (maxFormula >= 25) {
+        maxFormula = 25;
       }
       this.maxPvaluesBounds = maxFormula;
     }
