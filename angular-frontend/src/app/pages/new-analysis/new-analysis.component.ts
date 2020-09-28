@@ -8,6 +8,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-new-analysis',
   templateUrl: './new-analysis.component.html',
@@ -44,7 +45,8 @@ export class NewAnalysisComponent implements OnInit {
   constructor(
     private commonApi: CommonService,
     private msg: NzMessageService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
@@ -163,6 +165,7 @@ export class NewAnalysisComponent implements OnInit {
       .newTask(this.csv, this.taskMeta)
       .then((result) => {
         this.msg.info(`Task ${name} has started`);
+        this._router.navigate(['']);
       })
       .catch((error) => {
         this.msg.error('Error starting new task');
