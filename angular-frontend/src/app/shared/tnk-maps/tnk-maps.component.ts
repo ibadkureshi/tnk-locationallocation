@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import * as L from 'leaflet';
 import '../../../../node_modules/leaflet-draw/dist/leaflet.draw-src.js';
-import { Map } from 'leaflet';
+import { Map, featureGroup } from 'leaflet';
 @Component({
   selector: 'app-tnk-maps',
   templateUrl: './tnk-maps.component.html',
@@ -22,6 +22,7 @@ export class TnkMapsComponent implements OnInit, OnChanges {
   private mapIsLoaded: boolean = false;
   layers: L.Layer[];
   constructor() {}
+  private _lastLayer: any;
   public drawItems: L.FeatureGroup = L.featureGroup();
   public drawLocal: any = {
     draw: {
@@ -111,6 +112,12 @@ export class TnkMapsComponent implements OnInit, OnChanges {
     // Do stuff with map
     this.initMarkers();
     this.mapIsLoaded = true;
+    this.map.on('draw:drawstart', (e) => {
+      this.drawItems.removeLayer(this._lastLayer);
+    });
+    this.map.on('draw:drawstop', (e) => {
+      this._lastLayer = this.drawItems.getLayers()[0]['_leaflet_id'];
+    });
   }
   ngOnChanges(changes: SimpleChanges) {
     if (!this.mapIsLoaded) return;
