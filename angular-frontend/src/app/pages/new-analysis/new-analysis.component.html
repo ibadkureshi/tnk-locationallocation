@@ -16,8 +16,8 @@
     </div>
     <app-tnk-maps [markers]="markers" (boundingBox)="getBoundingBox($event)"></app-tnk-maps>
   </div>
-  <!-- <div class="box border shadow" *ngIf="boundingBox"> -->
-  <div class="box border shadow">
+  <div class="box border shadow" *ngIf="boundingBox">
+    <!-- <div class="box border shadow"> -->
     <div class="step">
       <div>
         <span class="highlight">Step 3</span>: Please fill the required details. Note that computation time increases
@@ -43,8 +43,7 @@
                   class="custom-tooltip" nz-button nz-tooltip nzTooltipTitle="The selected area will be split into a
                   grid of almost squares. By providing the number of grid-boxes per row (Grid Length) the Grid
                   Height is automatically selected so that each grid-box is < as square as possible> ."
-                  nzType="default" nzShape="circle" [nzSize]="'small'"><i nz-icon nzType="info">
-                  </i></button></nz-form-label>
+                  nzType="default" nzShape="circle" [nzSize]="'small'">?</button></nz-form-label>
               <nz-form-control [nzSm]="12" [nzXs]="24" nzErrorTip="Please enter a valid grid length!">
                 <nz-input-number formControlName="gridLength" [nzMin]="1" [nzMax]="50" [nzStep]="1" id="gridLength">
                 </nz-input-number>
@@ -55,9 +54,7 @@
             <nz-form-item>
               <nz-form-label [nzSm]="12" [nzXs]="24" nzRequired nzFor="dataPoints">Out of bounds points <button
                   class="custom-tooltip" nz-button nz-tooltip nzTooltipTitle="Currenly all data points lying outside the
-                  selected area are discarded." nzType="default" nzShape="circle" [nzSize]="'small'"><i nz-icon
-                    nzType="info">
-                  </i></button>
+                  selected area are discarded." nzType="default" nzShape="circle" [nzSize]="'small'">?</button>
               </nz-form-label>
               <nz-form-control [nzSm]="12" [nzXs]="24" nzErrorTip="Please select what to do with the points!">
                 <nz-select nzShowSearch formControlName="dataPoints" nzPlaceHolder="Excluded Points Action"
@@ -72,9 +69,8 @@
             <nz-form-item>
               <nz-form-label [nzSm]="12" [nzXs]="24" nzRequired nzFor="costType">Cost type <button
                   class="custom-tooltip" nz-button nz-tooltip nzTooltipTitle="Should the distance between A and B be measured in meters or
-                  second (i.e. driving time)" nzType="default" nzShape="circle" [nzSize]="'small'"><i nz-icon
-                    nzType="info">
-                  </i></button></nz-form-label>
+                  second (i.e. driving time)" nzType="default" nzShape="circle" [nzSize]="'small'">?</button>
+              </nz-form-label>
               <nz-form-control [nzSm]="12" [nzXs]="24" nzErrorTip="Please select distance or time">
                 <nz-select nzShowSearch formControlName="costType" nzPlaceHolder="Action For Excluded Points"
                   id="costType">
@@ -98,8 +94,7 @@
             <nz-form-item>
               <nz-form-label [nzSm]="12" [nzXs]="24" nzRequired nzFor="maxVal">Max p-value<button class="custom-tooltip"
                   nz-button nz-tooltip [nzTooltipTitle]="titleTemplate" nzType="default" nzShape="circle"
-                  [nzSize]="'small'"><i nz-icon nzType="info">
-                  </i></button></nz-form-label>
+                  [nzSize]="'small'">?</button></nz-form-label>
               <nz-form-control [nzSm]="12" [nzXs]="24" nzErrorTip="Please enter a valid p-value!">
                 <nz-input-number formControlName="maxVal" [nzMin]="1" [nzMax]="maxPvaluesBounds" [nzStep]="1"
                   id="maxVal">
@@ -118,6 +113,6 @@
   </ng-template>
 
   <button nz-button nzType="primary" (click)="startNewTask()" *ngIf="markers.length > 0 && boundingBox && formIsValid">
-    <i nz-icon nzType="enter"></i>Start new task
+    Start new task
   </button>
 </div>

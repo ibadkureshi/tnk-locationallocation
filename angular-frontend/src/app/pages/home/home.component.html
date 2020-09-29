@@ -1,7 +1,7 @@
 <div class="header">
   <h2>List of Tasks</h2>
-  <button nz-button nzType="primary" [nzSize]="'small'" nzShape="circle" (click)="getAllTasks()">
-    <i nz-icon nzType="reload"></i>
+  <button nz-button nzType="primary" [nzSize]="'small'" (click)="getAllTasks()">
+    Refresh
   </button>
 </div>
 <nz-table #basicTable [nzData]="listOfData" [nzLoading]="loading">
