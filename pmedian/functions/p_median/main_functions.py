@@ -4,7 +4,7 @@ import pmedian.functions.p_median.distance as dist
 from pmedian.functions.p_median.Population import Population
 from progress.bar import Bar
 import openrouteservice
-import numpy
+import numpy, os
 
 
 def import_data(csv_filepath, latitude_col, longitude_col):
@@ -34,9 +34,25 @@ def get_distance_matrix(grid, supply_coordinates=None, cost_metric="duration", o
     # Need to reverse order of supply coordinates for distances to be calculated
     if supply_coordinates:
         supply_coordinates = [(t[1], t[0]) for t in supply_coordinates]
-    # Initialize
-    client = openrouteservice.Client(base_url='http://kubernetes.ibadkureshi.com:8080/ors')
-    print("kubernetes")
+    # Initialize a client for ORS - 
+    # if the user provides a host to the container then just connect to that.
+    # if they also include a key connect using host and key
+    # if there is only a key then connect to the demo server.
+    try:
+        orsHost = os.environ['ORS_HOST']
+        client = openrouteservice.Client(base_url=orsHost)
+    except:
+        try:
+            orsHost = os.environ['ORS_HOST']
+            orsKey = os.environ['ORS_KEY']
+            client = openrouteservice.Client(base_url=orsHost, key=orsKey)
+        except:
+            try:
+                orsKey = os.environ['ORS_KEY']
+                client = openrouteservice.Client(key=orsKey)
+            except:
+                print("Error with ORS credentials or making a connection.")
+
     d_length = len(grid) * len(grid[0])
     grid_box, grid_centre = dist.bound_box(grid)
     # Get basemap and check which grid-squares lie on water
@@ -86,7 +102,6 @@ def get_distance_matrix(grid, supply_coordinates=None, cost_metric="duration", o
     dist_mx = dist.fill_other_diagonal(dist_mx)
 
     return dist_mx
-
 
 def clean(grid, distances):
     """
