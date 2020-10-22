@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            // "deployUrl": "/static/angular/",
+            "deployUrl": "/static/angular/",
             "outputPath": "dist/track-and-know-frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
