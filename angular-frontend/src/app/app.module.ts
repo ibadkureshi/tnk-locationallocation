@@ -15,11 +15,15 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
 import { LayoutComponentsModule } from './core/layout-components/layout-components.module';
 import { IconsProviderModule } from './icons-provider.module';
+import { LicencePageComponent } from './shared/licence-page/licence-page.component';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { LicenceGuard } from './services/guards/licence-guard';
 
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, LicencePageComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -29,10 +33,12 @@ registerLocaleData(en);
     CoreModule,
     LeafletModule,
     LeafletDrawModule,
+    NzButtonModule,
     LayoutComponentsModule,
     IconsProviderModule,
+    NzCheckboxModule,
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }],
+  providers: [{ provide: NZ_I18N, useValue: en_US }, LicenceGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
