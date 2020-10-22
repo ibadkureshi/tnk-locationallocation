@@ -1,22 +1,42 @@
-# Patient Routing Service
+# Track&Know: Genetic p-Median Solver
 
-Use this query in a browser when the container is running.
+## Quick Start
 
-http://localhost:8000/query?userid=X&postcode=PE218RN
+If you have your own Open Route Service pass it using the ORS_HOST environment variable:
 
-1. Use this query in a browser when the container is running.
+* `docker run -p 8000:8000 -e ORS_HOST=`*https://yourhost/ors*` ibadkureshi/tnk-pmed:latest`
 
-http://localhost:8000/query?userid=X&postcode=PE218RN
+If you are using the public Open Route Service (the API playground) pass you key to the code
 
-2. The p-median runs using input from disk for the moment. The input is located at the `pmedian/functions/data` folder. In this input, the keys "name" and "id" are test and 000 respectively. Hence the output created is test_000.json
+* `docker run -p 8000:8000 -e ORS_KEY=`*your key* ` ibadkureshi/tnk-pmed:latest`    
+*# this is not recommended due to rate limits and the code doesnt optimise against number of api/routing calls*
 
-http://localhost:8000/pmedian/create-task
+Then open a browser and go to http://localhost:8000/
 
-This will return a task-id. 
+## About Track & Know
 
-Then at http://localhost:8000/pmedian/get-task?task-id=<task-id> you will see the progress of the task. Initially this will be STARTED, but after  2-3 minutes it will trun to SUCCESS.
+<img src="docs/images/proj-logo.png" align="right" alt="Track&Know Logo" >
 
-Once succesful you can download the output at
-http://localhost:8000/pmedian/get-file?filename=test_000.json 
+* **Project Title** - Big Data for Mobility Tracking Knowledge Extraction in Urban Areas
+* **Project Website** - https://trackandknowproject.eu/
+* **Work Package** - WP4: Big Data Analytics (BDA Toolbox) [*Leader: CNR*]
+* **Task & Deliverable** - 4.1 Analytics for mobility patterns detection and forecasting [*Leader: UPRC*]
+* **Component Leader** - Inlecom Group
 
-If you can't be bothered to wait for 2-3 minutes you can check the download link at http://localhost:8000/pmedian/get-file?filename=test.txt
+## Acknowledgement
+
+!["Funded by EU logo"](./docs/images/EU-H2020.jpg "Funded by EU H2020") This project has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement No 780754.
+
+## Background
+
+Location-allocation problems typical deal with provisioning of resources between facilities based on historic demand. The p-median approach is one such model that aims to minimise the total demand-weighted distance between the demand points and the facilities. This NP-Hard problem aims to locate p facilities to serve n demand, by minimising the total demand-weighted distance between the facilities and the demand.
+
+The Track&Know Genetic p-Median Solver uses a genetic algorithm approach to solve the problem in polynomial time. This tool plays an important role in translating mobility information into policy and management recommendations. This project in a parallelised and containerised implementation in python of a Genetic Algorithm approach to solve the p-Median problem. The underlying model is based on the following research paper:
+
+> Alp, O., Erkut, E., & Drezner, Z. (2003). An efficient genetic algorithm for the p-median problem. Annals of Operations research, 122(1-4), 21-42.
+
+## Maintainers
+* Dr. Ibad Kureshi
+* Dr. Panos Protopapas
+* Ms. Angeliki Mylonaki
+* Mr. Tasos Kakouri
