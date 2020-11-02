@@ -1,5 +1,5 @@
 """
-WSGI config for prsapp project.
+WSGI config for pmedapp project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'prsapp.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pmedapp.settings')
 
 application = get_wsgi_application()

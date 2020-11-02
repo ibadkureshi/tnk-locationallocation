@@ -1,6 +1,6 @@
 from celery import shared_task
 import pandas as pd
-import json
+import json, os
 from pmedian.functions import record
 from pmedian.functions import p_median
 
@@ -42,6 +42,8 @@ def p_median_calculation_task(input_df_json, output):
     output = record.time(output, "end")
 
     # Save results
+    if not os.path.exists("output"):
+        os.makedirs("output")
     filename = "output/" + output["name"] + "_" + p_median_calculation_task.request.id + ".json"
     with open(filename, "w") as f:
         json.dump(output, f)

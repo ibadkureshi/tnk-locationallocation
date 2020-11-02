@@ -23,16 +23,16 @@ RUN mkdir -p /app/broker/out/data_out
 RUN mkdir -p /app/broker/processed
 RUN mkdir -p /tmp/results
 RUN chmod -R 777 /tmp/results/
-RUN mkdir /prsapp
+RUN mkdir /pmedapp
 RUN mkdir -p /static
 COPY ./static/ /static/
-COPY . /prsapp/
+COPY . /pmedapp/
 # Setting up angular project
 # RUN npm install -y -g @angular/cli
-# WORKDIR /prsapp/angular-frontend
+# WORKDIR /pmedapp/angular-frontend
 # RUN npm install
 # RUN ng build --prod --output-path ./static/angular-frontend/static/angular/ --output-hashing none
 # RUN rm -rf node_modules
-WORKDIR /prsapp
+WORKDIR /pmedapp
 # Start
 CMD ./init.sh
