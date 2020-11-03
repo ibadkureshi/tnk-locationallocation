@@ -187,7 +187,7 @@ def solution_demand(final_population, grid, distances, p_value):
         sol_demand[j] += sq.demand
     sol_demand_weights = [round(demand/(sum(sol_demand)), 2) for demand in sol_demand]
 
-    return sol_demand_weights
+    return sol_demand_weights, sol_demand
 
 
 def solution_stats(final_population, grid, distances):

@@ -55,6 +55,13 @@ def treat_oob(coordinates, extremes, out_of_bounds_setting):
         for c in coordinates:
             if extremes[0] <= c[0] <= extremes[1] and extremes[2] <= c[1] <= extremes[3]:
                 new_coordinates.append(c)
+    elif out_of_bounds_setting == "include":
+        for c in coordinates:
+            if c[0] < extremes[0]: c[0] = extremes[0]  # Fix points south of box
+            if c[0] > extremes[1]: c[0] = extremes[1]  # north
+            if c[1] < extremes[2]: c[1] = extremes[2]  # west
+            if c[1] > extremes[3]: c[1] = extremes[3]  # east
+            new_coordinates.append(c)
     final_length = len(new_coordinates)
     treated = initial_length - final_length
     return new_coordinates, treated

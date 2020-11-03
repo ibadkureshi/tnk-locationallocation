@@ -42,12 +42,13 @@ def features(f, gd, d, m):
         max_metric, avg_metric = p_median.solution_stats(pop, gd, d)
         f["features"][-1]["properties"].update({"avg_" + m: avg_metric, "max_" + m: max_metric})
         sol_coordinates = p_median.solution_coordinates(pop, gd)
-        sol_demand_weights = p_median.solution_demand(pop, gd, d, p)
-        for c, w in zip(sol_coordinates, sol_demand_weights):
+        sol_demand_weights, sol_demand = p_median.solution_demand(pop, gd, d, p)
+        for c, w, p in zip(sol_coordinates, sol_demand_weights, sol_demand):
             f["features"][-1]["locations"].append(
                 {"location": {
                     "type": "Point",
                     "coordinates": str(c[1]) + "," + str(c[0]),
                     "demand_weight": w,
+                    "demand_patients": p,
                     "name": "demand-based location"}})
     return f
