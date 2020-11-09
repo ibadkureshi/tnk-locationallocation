@@ -2,6 +2,7 @@ import numpy
 from geopy.distance import geodesic
 from openrouteservice.directions import directions
 from mpl_toolkits.basemap import Basemap
+from time import sleep
 
 
 def initiate_matrix(d_length, s_coordinates):
@@ -56,12 +57,24 @@ def distance(grid_sq_x, grid_sq_y, x, y, client, search_radius, grid_centre, dis
         # Choose either duration or distance
         return float(routes["routes"][0]["summary"][distance_metric])
     except Exception as e:  # Failed to get distance
-        print("Attempt failed. Are all needed maps loaded? Returning 424242424242. Error: {0}".format(e))
-        # By setting a very large value here, we are effectively setting the chance of this locations be selected
-        # to 0, IF the demand of this location is not large. Also, this location will not have a role to where
-        # things are located as it's equally way to far from everything.
-        return 424242424242
-
+        print(f"Failed to retrieve distance from ORS server between coordinates: {coordinates}.")
+        print("Waiting 5 seconds.")
+        sleep(5)
+        try:
+            routes = directions(client, coordinates, radiuses=radii, geometry=False)
+            print("Success")
+            return float(routes["routes"][0]["summary"][distance_metric])
+        except:
+            try:
+                print(f"Failed to retrieve distance from ORS server between coordinates: {coordinates}.")
+                print("Waiting 10 seconds.")
+                sleep(10)
+                routes = directions(client, coordinates, radiuses=radii, geometry=False)
+                print("Success")
+                return float(routes["routes"][0]["summary"][distance_metric])
+            except:
+                print(f"Failed to retrieve distance from ORS server between coordinates: {coordinates}. Can't create distance matrix. Aborting.Are all needed maps loaded?")
+                raise
 
 def corner_to_use(grid_sq, grid_centre):
     """
