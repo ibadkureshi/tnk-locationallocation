@@ -32,13 +32,13 @@ Then open a browser and go to `http://localhost:8000/`
 
 Location-allocation problems typical deal with provisioning of resources between facilities based on historic demand. The p-median approach is one such model that aims to minimise the total demand-weighted distance between the demand points and the facilities. This NP-Hard problem aims to locate p facilities to serve n demand, by minimising the total demand-weighted distance between the facilities and the demand.
 
-The Track&Know Genetic p-Median Solver uses a genetic algorithm approach to solve the problem in polynomial time. This tool plays an important role in translating mobility information into policy and management recommendations. This project in a parallelised and containerised implementation in python of a Genetic Algorithm approach to solve the p-Median problem. The underlying model is based on the following research paper:
+The Track&Know Genetic p-Median Solver uses a genetic algorithm approach to solve the problem in polynomial time. This tool plays an important role in translating mobility information into policy and management recommendations. This project is a parallelised and containerised implementation in Python of a Genetic Algorithm approach to solve the p-Median problem. The underlying model is based on the following research paper:
 
 > Alp, O., Erkut, E., & Drezner, Z. (2003). An efficient genetic algorithm for the p-median problem. Annals of Operations research, 122(1-4), 21-42.
 
 ## Documentation
 
-* Details about the [model](./docs/model.md)
+* Details about the [algorithm](./docs/algorithm.md)
 * Details about the [implementation](./docs/imple.md)
 * How to [contribute](./CONTRIB)
 * Other software/tools/models from [Track&Know](https://trackandknowproject.eu)
