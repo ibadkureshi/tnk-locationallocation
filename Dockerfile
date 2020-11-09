@@ -1,4 +1,5 @@
-FROM python:3.7.2-stretch
+#FROM python:3.7.2-stretch
+FROM python:3.7-slim
 EXPOSE 8000
 ENV PYTHONUNBUFFERED 1
 
@@ -6,7 +7,8 @@ ENV PYTHONUNBUFFERED 1
 RUN /usr/local/bin/python -m pip install --upgrade pip
 # Install libgeos-dev using apt
 RUN apt-get update
-RUN apt-get install -y libgeos-dev
+#RUN apt-get install -y libgeos-dev
+RUN apt-get install -y wget libgeos-dev libmariadb-dev gcc
 #Angular dependencies
 # RUN apt-get -y install curl
 # RUN curl -sL https://deb.nodesource.com/setup_12.x
