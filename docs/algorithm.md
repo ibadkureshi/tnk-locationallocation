@@ -49,35 +49,36 @@ Given a problem consisting of *n* demand points, *p* facilities to be placed, an
 ##### Setting the population size
 
 Given a problem consisting of *n* demand points and *p* facilities to be placed: 
-$$
+
+```math
 \begin{aligned}
 &\text{Let } S \text{ equal }{n\choose p}\text{, the number of all possible solutions to the problem, and }w=\left\lceil\frac{n}{p}\right\rceil\text{, the rounded-up density}\\
 &\text{of the problem. The population size then equals:}
 \end{aligned}
-$$
+```
 
-$$
+```math
 P(n,p) = w\cdot\max\left\{2, \left\lceil\frac{n}{100}\cdot\frac{\ln{S}}{w}\right\rceil\right\}
-$$
+```
 
 The advantages of this dynamic choice of population size are the following. First, although population size will increase with the number of possible solutions to the problem, this increase is logarithmic which help keep the population size manageable. Second, the population size being a multiple of *d*, and in addition always being larger than *2w*, implies that the population will consist of at least *2w* solutions, each containing *p* locations; in other words, the population will consist of at leat *2n* (perhaps repeating) locations, thus guarantying that each location can be represented at least twice in the initial population.
 
 ##### Setting the counter *T\**
 
-$$
+```math
 \begin{aligned}
 &\text{Counter }T\text{ is initally set equal to }T^*=\left\lceil n\sqrt{p}\right\rceil\text{. Then, following each new generation of a candidate solution:}\\
 &\text{If the population is not updated the value of }T\text{ is decreased by 1.}\\
 &\text{If the population is updated the value of }T\text{ is set equal to }T^*.\\
 \end{aligned}
-$$
+```
 
 ##### Choosing the initial population
 
 Let a problem consit of *n* demand points, *p* facilities to be placed, and an initial population size *P=kw, where *k>1* is an integer. 
 
 We need to choose the locations for the *k* different groups that will consist of *d* members (initial solutions) each.
-$$
+```math
 \begin{aligned}
 &\text{For set 1 of }k \text{ choose members by incrementing locations by 1, as follows.}\\
 &\text{For the first member, choose locations }(1, 2, \dots, p).\\
@@ -103,16 +104,16 @@ $$
 &\text{Specifically, choose }(1, 3, 5)\text{, }(7,9,2)\text{, }(4,6,8)\text{, and }(10, r_3, r_4)\text{, where }r_3 \text{ and }r_4\text{ are chosen at random and are}\\
 &\text{not equal to 10 or each other.}\\
 \end{aligned}
-$$
+```
 
 ##### Selecting the parents and generating a child
 
 Consider the problem with  *n*=10, *p*=3, and *k*=2, impying that *w*=4. By the above example the initial population will be:
-$$
+```math
 \begin{aligned}
 &(1,2,3), (4,5,6), (7,8,9), (10, 2, 9), (1, 3, 5), (7, 9, 2), (4, 6, 8), (10, 4, 9)\text{ where the values for }r_1,\text{ } r_2, \text{ }r_3, \text{ and }r_4\\& \text{have been randomly chosen, are not equal to 10, } r_1\ne r_2\text{, and }r_3\ne r_4.
 \end{aligned}
-$$
+```
 To generate a child-member candidate solution we first need to choose two parents-members candidate solutions at random. Then we need to:
 
 1. Take the union of the parents location and obtain a *draft child*.
