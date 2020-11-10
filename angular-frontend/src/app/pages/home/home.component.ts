@@ -42,7 +42,6 @@ export class HomeComponent implements OnInit {
         });
         this.listOfData = [...this.listOfData];
         this.loading = false;
-        console.log(this.listOfData);
       })
       .catch((error) => {
         this.loading = false;

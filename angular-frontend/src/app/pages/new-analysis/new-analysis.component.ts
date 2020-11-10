@@ -65,7 +65,6 @@ export class NewAnalysisComponent implements OnInit {
       });
     });
     this.validateForm.statusChanges.subscribe((result) => {
-      console.log(result);
       const pValValidation = this.validateMaxValue();
       this.setMaxPValueBound();
       if (result === 'VALID') {
@@ -128,8 +127,6 @@ export class NewAnalysisComponent implements OnInit {
   }
   public getCsvBlob($event): void {
     this.csv = $event;
-    console.log('csv blob');
-    console.log($event);
   }
   public getBoundingBox($event): void {
     this.boundingBox = $event;
@@ -160,7 +157,6 @@ export class NewAnalysisComponent implements OnInit {
     this.taskMeta.properties.cost_type = costType;
     this.taskMeta.properties.p_val.max = maxVal;
     this.taskMeta.properties.p_val.min = minVal;
-    console.log(this.taskMeta);
     this.commonApi
       .newTask(this.csv, this.taskMeta)
       .then((result) => {
