@@ -92,9 +92,9 @@ We need to choose the locations for the *k* different groups that will consist o
 \\
 &\text{If }w=\frac{n}{p} + 1\text{, then fill in the empty slots of each set by randomly choosing locations.}
 \end{aligned}
-$$
+```
 For example, consider the problem with *n*=10, *p*=3, and *k*=2, impying that *w*=4.
-$$
+```math
 \begin{aligned}
 &\text{For set 1 of }2 \text{ choose members by incrementing locations by 1.}\\
 &\text{Specifically, choose }(1, 2, 3)\text{, }(4,5,6)\text{, }(7,8,9)\text{, and }(10, r_1, r_2)\text{, where }r_1 \text{ and }r_2\text{ are chosen at random and are}\\
