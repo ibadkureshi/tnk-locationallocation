@@ -2,7 +2,6 @@ import pmedian.functions.p_median.data as d
 import pmedian.functions.p_median.grid as g
 import pmedian.functions.p_median.distance as dist
 from pmedian.functions.p_median.Population import Population
-from progress.bar import Bar
 import openrouteservice
 import numpy, os
 
@@ -65,12 +64,6 @@ def get_distance_matrix(grid, supply_coordinates=None, cost_metric="duration", o
     d2s = dist.dist_2_supply(supply_coordinates, grid) if supply_coordinates else None
     # Get distances
     search_radius = round(dist.radius(grid[0][0])) * 1.05  # Distance between box-centre and furthest box-corner + 5%
-    # Progress bar
-    if only_supply_locations:
-        max_bar = d_length * len(supply_coordinates)
-    else:
-        max_bar = d_length * (d_length + len(supply_coordinates)) if supply_coordinates else d_length * d_length
-    bar = Bar('Calculating Distances', max=max_bar)
     # Only choose between supply locations
     if only_supply_locations:
         for x in range(d_length):
@@ -79,7 +72,6 @@ def get_distance_matrix(grid, supply_coordinates=None, cost_metric="duration", o
                 point_y = supply_coordinates[d2s[d_length + y]]
                 dist_mx[d_length + y][x] = dist.distance(box_x, point_y, x, y, client,
                                                          search_radius, grid_centre, cost_metric)
-                bar.next()
     # Choose from supply locations (if any) and grid
     else:
         for x in range(d_length):
@@ -89,15 +81,12 @@ def get_distance_matrix(grid, supply_coordinates=None, cost_metric="duration", o
                 box_y = grid[d2g[y][0]][d2g[y][1]]
                 dist_mx[y][x] = dist.distance(box_x, box_y, x, y, client,
                                               search_radius, grid_centre, cost_metric)
-                bar.next()
             # Distance to supply_locations, if any
             if supply_coordinates:
                 for y in range(len(supply_coordinates)):
                     point_y = supply_coordinates[d2s[d_length + y]]
                     dist_mx[d_length + y][x] = dist.distance(box_x, point_y, x, y, client,
                                                              search_radius, grid_centre, cost_metric)
-                    bar.next()
-        bar.finish()
 
     dist_mx = dist.fill_other_diagonal(dist_mx)
 

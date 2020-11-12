@@ -1,7 +1,7 @@
 from pandas.api.types import is_numeric_dtype
 from celery.result import AsyncResult
 import json
-import redis
+#import redis
 from django.http import HttpResponseBadRequest, HttpResponse
 import mimetypes
 
